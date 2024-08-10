@@ -1,0 +1,14 @@
+---
+export async function getStaticPaths() {
+  const pages = [
+    {
+      slug: undefined,
+    },
+  ];
+  return pages.map(({ slug }) => {
+    return {
+      params: { slug },
+    };
+  });
+}
+---

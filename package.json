@@ -1,0 +1,32 @@
+{
+  "name": "shielded-rust-web",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "rust-local": "cd libs/shielded_rust && wasm-pack build --target bundler --release --features \"wasm\" && cd ../.."
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.2",
+    "@astrojs/vue": "^4.5.0",
+    "astro": "^4.13.2",
+    "astro-icon": "^1.1.0",
+    "astrocors": "^0.1.4",
+    "axios": "^1.7.3",
+    "bulma": "^1.0.2",
+    "pinia": "^2.2.1",
+    "sass": "^1.77.8",
+    "shielded-rust-api": "../shielded_rust_api/clients/js",
+    "typescript": "^5.5.4",
+    "vue": "^3.4.37"
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.1.68",
+    "vite-plugin-top-level-await": "^1.4.4",
+    "vite-plugin-wasm": "^3.3.0"
+  }
+}
