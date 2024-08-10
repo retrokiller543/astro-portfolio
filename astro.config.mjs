@@ -1,21 +1,27 @@
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'astro/config';
 import wasm from "vite-plugin-wasm";
 import topLevelAwait from "vite-plugin-top-level-await";
 import icon from "astro-icon";
-
 import vue from "@astrojs/vue";
+
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'hybrid',
+  experimental: {
+    serverIslands: true
+  },
+  site: 'https://shielded-rust-web.netlify.app',
   integrations: [wasm(), icon(), vue({
     appEntrypoint: '/src/_app',
     compilerOptions: {
-      isProduction: false,
-      isCustomElement: (tag) => tag.startsWith('Ion-'),
+      isProduction: true,
+      isCustomElement: tag => tag.startsWith('Ion-')
     },
-    devtools: true,
-  })],
+    devtools: false
+  }), sitemap()],
   vite: {
     plugins: [wasm(), topLevelAwait()],
     resolve: {

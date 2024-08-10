@@ -1,0 +1,44 @@
+---
+import IonCryptoView from "../../components/vue/global/IonCryptoView.vue";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Ferric Crypto Lib">
+  <IonCryptoView client:only="vue">
+    <article class="hero">
+      <div class="hero-body">
+        <section class="section">
+            <div class="container">
+              <h1 class="title">Cryptographic Library</h1>
+              <p class="subtitle">
+                A collection of cryptographic algorithms implemented in Rust.
+              </p>
+    
+              <div class="content">
+                <p>
+                  This library is designed for use in cryptography courses and
+                  includes a variety of algorithms, both standard and custom. While
+                  still in an early stage, it serves as a practical resource for
+                  learning and experimentation.
+                </p>
+              </div>
+    
+              <div class="content">
+                <p>
+                  This library is designed to work with more then just Rust. It also
+                  works in WASM and in Python with potentially more bindings in the
+                  future.
+                </p>
+              </div>
+            </div>
+          </section>
+      </div>
+    </article>
+  </IonCryptoView>
+</Layout>
+
+<style lang="scss">
+  .hero {
+    background-color: var(--bulma-background);
+  }
+</style>

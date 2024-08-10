@@ -6,14 +6,17 @@
                 <span v-if="isMenuOpen">Close</span>
                 <span v-else>Open</span>
             </button>
+            <ul class="menu-list home-link">
+                <a href="/cryptography">Home</a>
+            </ul>
             <p class="menu-label">Symmetric Ciphers</p>
             <ul class="menu-list">
-                <li><a href="/caesar">Caesar Cipher</a></li>
-                <li><a href="/vigenere">Vigenere Cipher</a></li>
+                <li><a href="/cryptography/caesar">Caesar Cipher</a></li>
+                <li><a href="/cryptography/vigenere">Vigenere Cipher</a></li>
             </ul>
             <p class="menu-label">Asymmetric Ciphers</p>
             <ul class="menu-list">
-                <li><a href="/rsa">RSA</a></li>
+                <li><a href="/cryptography/rsa">RSA</a></li>
             </ul>
         </aside>
     </div>
@@ -24,12 +27,12 @@ export default {
     data() {
         return {
             isMenuOpen: true,
+
         };
     },
     methods: {
         toggleMenu() {
             this.isMenuOpen = !this.isMenuOpen;
-            console.log('Menu toggled:', this.isMenuOpen);  // Debugging: log the state
             this.$emit('menuToggled', this.isMenuOpen);
         },
     },
@@ -46,8 +49,8 @@ li {
     display: flex;
     position: -webkit-sticky;
     position: sticky;
-    top: 5rem; /* Adjust this value to match the height of your navbar */
-    height: calc(100vh - 5rem); /* Adjust to ensure it spans the full height minus the navbar */
+    top: 10%; /* Adjust this value to match the height of your navbar */
+    height: calc(100vh); /* Adjust to ensure it spans the full height minus the navbar */
     overflow-y: auto; /* Allows scrolling within the sidebar if content overflows */
     
     .menu {
@@ -60,6 +63,11 @@ li {
         position: fixed; /* Fixed positioning to stick to the side */
         top: 5rem; /* Adjust according to the navbar height */
         left: 0;
+
+        .home-link {
+            padding-top: 1em;
+            background-color: var(--primary-color-dark);
+        }
 
         @media (max-width: 768px) {
             width: 100%;

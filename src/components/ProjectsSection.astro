@@ -1,0 +1,27 @@
+---
+import ProjectCard from './ProjectCard.astro';
+
+interface Project {
+  title: string;
+  description: string;
+  imageUrl: string;
+  projectUrl: string;
+}
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section id="projects" class="section">
+  <div class="container">
+    <h2 class="title">My Projects</h2>
+    <div class="columns is-multiline">
+      {projects.map((project) => (
+        <ProjectCard {...project} />
+      ))}
+    </div>
+  </div>
+</section>

@@ -134,8 +134,8 @@ export default defineComponent({
         submitDecryptForm() {
             this.decryptionTime = this.timeOperation(() => {
                 const data = {
-                    key: this.encryptionForm.key,
-                    input: this.encryptionForm.plaintext,
+                    key: this.decryptionForm.key,
+                    input: this.decryptionForm.plaintext,
                     config: this.configStore.config
                 }
 
@@ -145,7 +145,7 @@ export default defineComponent({
             });
         },
         generateRandomKey() {
-            const key = Math.floor(Math.random() * this.config.alfabet.length) + 1;
+            const key = Math.floor(Math.random() * this.config.alphabet.length) + 1;
             this.encryptionForm.key = key;
             this.decryptionForm.key = key;
         }

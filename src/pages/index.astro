@@ -1,11 +1,46 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import IonCryptoView from '../components/vue/global/IonCryptoView.vue';
+import ProjectsSection from '../components/ProjectsSection.astro';
+
+const projects = [
+  {
+    title: "Cryptography",
+    description: "Various implementations of various cryptography algorithms. Made in Rust and works in WASM and nativly on Python with help from FFI bindings.",
+    imageUrl: "/images/project1.jpg",
+    projectUrl: "/cryptography",
+  },
+  {
+    title: "Rustic RTMP",
+    description: "A RTMP implementation in Rust. (not complete)",
+    imageUrl: "/images/rustic_rtmp.webp",
+    projectUrl: "https://github.com/retrokiller543/rustic_rtmp",
+  },
+  {
+	title: "Ferric Net Scanner",
+	description: "A network scanner in Rust.",
+	imageUrl: "/images/net-scanner.webp",
+	projectUrl: "https://github.com/retrokiller543/ferric_net_scanner",
+  },
+  
+];
 ---
 
-<Layout title="Shielded Rust">
-	<main>
-		<IonCryptoView client:load>
-		</IonCryptoView>
-	</main>
+<Layout title="Home">
+  <section class="hero is-fullheight">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h1 class="title">Welcome to My Portfolio</h1>
+        <h2 class="subtitle">Showcasing my work in web development and cybersecurity.</h2>
+        <a class="button is-light is-large" href="#projects">Explore My Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <ProjectsSection projects={projects} />
 </Layout>
+
+<style lang="scss">
+  .hero {
+	background-color: var(--bulma-background);
+  }
+</style>

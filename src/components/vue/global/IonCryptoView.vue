@@ -77,9 +77,12 @@
 
   .content {
     transition: margin-left 0.3s ease-in-out;
+    padding-top: 5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
   }
 
   .main-content {
-      margin-left: 15rem;
+      margin-left: 17rem;
     }
   </style>

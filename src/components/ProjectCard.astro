@@ -1,0 +1,25 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  imageUrl: string;
+  projectUrl: string;
+}
+
+const { title, description, imageUrl, projectUrl } = Astro.props;
+---
+
+<div class="column is-one-third">
+  <div class="card">
+    <div class="card-image">
+      <figure class="image is-4by3">
+        <img src={imageUrl} alt={title} />
+      </figure>
+    </div>
+    <div class="card-content">
+      <p class="title is-4">{title}</p>
+      <p class="subtitle is-6">{description}</p>
+      <a href={projectUrl} class="button is-link">View Project</a>
+    </div>
+  </div>
+</div>
