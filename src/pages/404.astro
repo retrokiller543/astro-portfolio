@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '@layouts/Layout.astro';
 ---
 
 <Layout title="Shielded Rust - 404">
@@ -8,11 +8,9 @@ import Layout from '../layouts/Layout.astro';
         <script>
             document.addEventListener("DOMContentLoaded", function () {
               const backButton = document.getElementById("backButton")! as HTMLAnchorElement;
-              if (document.referrer && document.referrer !== window.location.href) {
-                backButton.href = document.referrer;
-              } else {
-                backButton.style.display = 'none'; // Hide the button if there's no referrer
-              }
+              backButton.addEventListener("click", function () {
+                window.history.back();
+              })
             });
           </script>
 

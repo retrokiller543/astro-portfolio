@@ -1,6 +1,5 @@
 ---
 import ThemeSelector from './vue/ThemeSelector.vue';
-import ProjectDropdown from './vue/ProjectDropdown.vue';
 ---
 
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
@@ -18,7 +17,13 @@ import ProjectDropdown from './vue/ProjectDropdown.vue';
     <div class="navbar-start">
       <a class="navbar-item" href="/">Home</a>
       <a class="navbar-item" href="/about">About</a>
-      <ProjectDropdown/>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">Projects</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="/cryptography">Cryptography</a>
+          <a class="navbar-item" href="#">Blog</a>
+        </div>
+      </div>
     </div>
     <div class="navbar-end">
       <ThemeSelector client:only="vue"/>

@@ -1,0 +1,12 @@
+---
+import Layout from '@layouts/Layout.astro';
+import IonCryptoView from '@vue/global/IonCryptoView.vue';
+---
+
+<Layout title="Vigenere Encryption">
+    <IonCryptoView client:only="vue">
+        <div>
+            <h1 class="title">Vigenere</h1>
+        </div>
+    </IonCryptoView>
+</Layout>

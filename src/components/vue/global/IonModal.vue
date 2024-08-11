@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import CloseIcon from '../../../assets/icons/CloseIcon.vue';
+import CloseIcon from '@assets/icons/CloseIcon.vue';
 import IonIconButton from './IonIconButton.vue';
 
 export default {

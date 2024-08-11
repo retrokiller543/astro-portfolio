@@ -50,7 +50,7 @@ import IonModal from './IonModal.vue';
 
 import { defineComponent, reactive } from 'vue';
 import { useConfigStore } from '../stores/config';
-import { BASE64_ALPHABET, ALPHABET } from '../../../models/config';
+import { BASE64_ALPHABET, ALPHABET, type Config } from '../../../models/config';
 
 export default defineComponent({
   components: {
@@ -92,6 +92,7 @@ export default defineComponent({
       }
     }
   },
+  
   setup(props, { emit }) {
     const configStore = useConfigStore();
     let form: Config = reactive(configStore.config);

@@ -10,6 +10,11 @@ import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
+  //base: 'https://astro-portfolio-nine-puce.vercel.app/',
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'viewport'
+  },
   output: 'hybrid',
   experimental: {
     serverIslands: true
