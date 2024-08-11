@@ -1,0 +1,32 @@
+---
+import Layout from '@layouts/Layout.astro';
+import IonCryptoView from '@vue/global/IonCryptoView.vue';
+import FileExplorer from '@vue/FileExplorer.vue';
+---
+
+<Layout title="Caesar Encryption - Home">
+    <IonCryptoView client:only="vue">
+        <article class="hero container" style="margin-left: 17px;">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">Caesar Encryption</h1>
+                    <a href="/cryptography/caesar/playground" class="button is-link">Go to Playground</a>
+                </div>
+            </div>
+            <div class="content">
+                <FileExplorer client:load owner="retrokiller543" repo="rustic_cryptography" path="src/symmetric/caesar" />
+            </div>
+        </article>
+    </IonCryptoView>
+</Layout>
+
+<style lang="scss">
+    .hero {
+        width: 100%;
+        
+        &.container {
+            width: 100%;
+            height: 100%;
+        }
+    }
+</style>

@@ -31,7 +31,13 @@ import ThemeSelector from './vue/ThemeSelector.vue';
   </div>
 </nav>
 
-<style>
+<style lang="scss">
+  $z-index: 1000;
+
+.navbar {
+  z-index: $z-index;
+}
+
 .navbar-item.is-active {
   font-weight: bold;
 }

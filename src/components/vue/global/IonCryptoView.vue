@@ -1,88 +1,125 @@
 <template>
-    <main class="is-flex">
-      <IonCryptoMenu @menuToggled="sidebarOpened" client:idle />
-      <section class="of-auto content" :class="{'main-content': sidebarOpen}">
-        <slot></slot>
-      </section>
-      <button
-        client:idle
-        @click="openConfig"
-        class="button is-primary is-fixed-bottom-right"
-      >
-        Config
+  <main class="is-flex">
+    <IonCryptoMenu @menuToggled="sidebarOpened" client:idle />
+    <section class="of-auto content" :class="{'main-content': sidebarOpen}">
+      <button @click="goBack" class="button is-back">
+        Go Back
       </button>
-      <IonConfigModal client:idle v-if="showModal" @close="closeModal" @submit="submitConfig" />
-    </main>
-  </template>
-  
-  <script lang="ts">
-  import IonConfigModal from './IonConfigModal.vue';
-  import IonCryptoMenu from './IonCryptoMenu.vue';
+      <article class="shifted">
+        <slot></slot>
+      </article>
+    </section>
+    <button
+      client:idle
+      @click="openConfig"
+      class="button is-primary is-fixed-bottom-right"
+    >
+      Config
+    </button>
+    <IonConfigModal client:idle v-if="showModal" @close="closeModal" @submit="submitConfig" />
+  </main>
+</template>
 
-  import { ref } from 'vue';
-  import { type Config, get_default_config } from '../../../models/config.ts';
-  
-  export default {
-    components: {
-      IonConfigModal,
-      IonCryptoMenu,
-    },
-    props: {
-      onConfigSaved: {
-        type: Function,
-      },
-    },
+<script lang="ts">
+import IonConfigModal from './IonConfigModal.vue';
+import IonCryptoMenu from './IonCryptoMenu.vue';
 
-    data() {
-      return {
-        sidebarOpen: true,
-      };
-    },
+import { ref } from 'vue';
+import { type Config } from '../../../models/config.ts';
 
-    methods: {
-      submitConfig(config: Config) {
-        this.$emit('configSaved', config);
-        this.closeModal();
-      },
-      openConfig() {
-        this.showModal = true;
-      },
-      sidebarOpened(isOpen: boolean) {
-        this.sidebarOpen = isOpen;
-      },
+export default {
+  components: {
+    IonConfigModal,
+    IonCryptoMenu,
+  },
+  props: {
+    onConfigSaved: {
+      type: Function,
     },
-    emits: ['configSaved'],
-    setup() {
-      const showModal = ref(false);
-  
-      const closeModal = () => {
-        showModal.value = false;
-      };
-  
-      return {
-        showModal,
-        closeModal,
-      };
+  },
+
+  data() {
+    return {
+      sidebarOpen: false,
+    };
+  },
+
+  methods: {
+    submitConfig(config: Config) {
+      this.$emit('configSaved', config);
+      this.closeModal();
     },
-  };
-  </script>
-  
-  <style scoped>
-  .is-fixed-bottom-right {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    z-index: 41;
-  }
+    openConfig() {
+      this.showModal = true;
+    },
+    sidebarOpened(isOpen: boolean) {
+      this.sidebarOpen = isOpen;
+    },
+    goBack() {
+      window.history.back();
+    },
+  },
+  emits: ['configSaved'],
+  created() {
+    const savedState = window.localStorage.getItem('isMenuOpen');
+    this.sidebarOpen = savedState === 'true'; // Set sidebarOpen based on localStorage
+  },
+  setup() {
+    const showModal = ref(false);
 
-  .content {
-    transition: margin-left 0.3s ease-in-out;
-    padding-top: 5rem;
-    margin-left: 2rem;
-    margin-right: 2rem;
-  }
+    const closeModal = () => {
+      showModal.value = false;
+    };
 
-  .main-content {
-      margin-left: 17rem;
-    }
-  </style>
+    return {
+      showModal,
+      closeModal,
+    };
+  },
+};
+</script>
+
+<style scoped lang="scss">
+$z-index-fixed-button: 41;
+$fixed-bottom-spacing: 1rem;
+$back-button-top: 6rem;
+$back-button-left: 0rem;
+$content-padding-top: 5rem;
+$content-margin-left: 2rem;
+$content-margin-right: 2rem;
+$content-width: 100%;
+$content-padding-right: 4rem;
+$main-content-margin-left: 17rem;
+$shifted-margin-top: 5rem;
+
+.is-fixed-bottom-right {
+  position: fixed;
+  bottom: $fixed-bottom-spacing;
+  right: $fixed-bottom-spacing;
+  z-index: $z-index-fixed-button;
+}
+
+.is-back {
+  position: absolute;
+  top: $back-button-top;
+  left: $back-button-left;
+}
+
+.content {
+  transition: margin-left 0.3s ease-in-out;
+  padding-top: $content-padding-top;
+  margin-left: $content-margin-left;
+  margin-right: $content-margin-right;
+  width: $content-width;
+  position: relative;
+  padding-right: $content-padding-right;
+}
+
+.main-content {
+  margin-left: $main-content-margin-left;
+}
+
+.shifted {
+  margin-top: $shifted-margin-top;
+}
+</style>
