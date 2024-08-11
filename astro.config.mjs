@@ -10,7 +10,7 @@ import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
-  base: import.meta.env.PROD ? 'https://astro-portfolio-nine-puce.vercel.app/' : '/',
+  //base: import.meta.env.PROD ? 'https://astro-portfolio-nine-puce.vercel.app/' : '/',
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport'
