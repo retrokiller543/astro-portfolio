@@ -1,4 +1,6 @@
 import axios, {type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios';
+import { API_BASE_URL } from "astro:env/client"
+
 
 export default class ApiClient {
     private client: AxiosInstance;
@@ -59,5 +61,5 @@ import { fetchConfig } from './config';
 import { caesar_encrypt, caesar_decrypt } from './caesar';
 
 export { type Config, type ConfigRequest, type ConfigResponse, fetchConfig, caesar_encrypt, caesar_decrypt };
-export const apiClient = ApiClient.createInstance("http://localhost:6968");
+export const apiClient = ApiClient.createInstance(API_BASE_URL);
 
