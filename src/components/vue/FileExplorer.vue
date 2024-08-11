@@ -54,6 +54,11 @@ import FileIcon from '@assets/icons/FileIcon.vue';
 import FolderIcon from '@assets/icons/FolderIcon.vue';
 import FolderOpenIcon from '@assets/icons/FolderOpenIcon.vue';
 
+marked.use({
+    gfm: true,
+    breaks: true
+});
+
 export default {
     components: {
         FileIcon,
@@ -222,6 +227,22 @@ export default {
     &.open-file {
         width: 30%;
     }
+
+    
+}
+[data-theme="nord"]
+.panel-heading {
+    color: var(--bulma-text-dark);
+}
+
+[data-theme="dark"]
+.panel-heading {
+    color: var(--bulma-text-dark)
+}
+
+[data-them="light"]
+.panel-heading {
+    color: hsl(var(--bulma-panel-h), var(--bulma-panel-s), var(--bulma-panel-heading-color-l));
 }
 
 
@@ -255,7 +276,6 @@ export default {
 
     .panel {
         width: 100%;
-        /* Full width for both panel and preview on mobile */
     }
 
     .open-file {

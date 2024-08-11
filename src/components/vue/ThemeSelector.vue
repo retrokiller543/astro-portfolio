@@ -31,3 +31,15 @@
     }
   };
   </script>
+
+  <style lang="scss">
+  [data-theme="nord"]
+  .navbar-item.is-active {
+    color: var(--polar-night-0) !important;
+  }
+
+  [data-theme="dark"]
+  .navbar-item.is-active {
+    color: var(--bulma-text-dark) !important;
+  }
+</style>
