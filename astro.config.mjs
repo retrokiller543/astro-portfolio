@@ -4,8 +4,9 @@ import wasm from "vite-plugin-wasm";
 import topLevelAwait from "vite-plugin-top-level-await";
 import icon from "astro-icon";
 import vue from "@astrojs/vue";
-
 import sitemap from "@astrojs/sitemap";
+
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
@@ -29,5 +30,6 @@ export default defineConfig({
         '@': fileURLToPath(new URL('./src', import.meta.url))
       }
     }
-  }
+  },
+  adapter: vercel()
 });
