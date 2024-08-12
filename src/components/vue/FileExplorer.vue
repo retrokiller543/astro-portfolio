@@ -1,69 +1,36 @@
 <template>
     <div class="file-explorer">
         <!-- Breadcrumb for navigation -->
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-            <ul>
-                <li v-for="(crumb, index) in breadcrumbs" :key="crumb.path"
-                    :class="{ 'is-active': index === breadcrumbs.length - 1 }">
-                    <a @click="navigateTo(crumb.path)">{{ crumb.name }}</a>
-                </li>
-            </ul>
-        </nav>
+        <Breadcrumbs :breadcrumbs="breadcrumbs" @navigate="navigateTo" />
 
         <!-- Main content area with directory listing and file preview side by side -->
         <div class="content-area">
             <!-- Panel for directory listing -->
-            <div class="panel" :class="{ 'open-file': selectedFileContent }">
-                <p class="panel-heading">
-                    Repository: {{ repo }}
-                </p>
-                <a class="panel-block" v-if="currentPath !== ''" @click="navigateTo(parentPath)">
-                    <span class="panel-icon">
-                        <FolderOpenIcon />
-                    </span>
-                    ..
-                </a>
-                <a v-for="file in files" :key="file.path" class="panel-block" @click="handleClick(file)">
-                    <span class="panel-icon">
-                        <FolderIcon v-if="file.type === 'dir'" />
-                        <FileIcon v-else-if="file.type === 'file'" />
-                        <FolderIcon v-else />
-                    </span>
-                    {{ file.name }}
-                </a>
-            </div>
-
+            <FileList :files="files" :currentPath="currentPath" :repo="repo" :parentPath="parentPath" :navigateTo="navigateTo" :handleClick="handleClick" />
+            
             <!-- File preview, only render if a file is selected -->
-            <transition name="fade">
-                <div v-if="selectedFileContent" class="box file-preview">
-                    <h2 class="subtitle">{{ selectedFileName }}</h2>
-                    <div v-if="isMarkdownFile" v-html="parsedMarkdown"></div>
-                    <pre v-else>{{ selectedFileContent }}</pre>
-                </div>
-            </transition>
+            <FilePreview
+                v-if="selectedFileContent"
+                :file="{ name: selectedFileName, content: selectedFileContent }"
+            />
         </div>
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref, onMounted, watch, computed } from 'vue';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
-import FileIcon from '@assets/icons/FileIcon.vue';
-import FolderIcon from '@assets/icons/FolderIcon.vue';
-import FolderOpenIcon from '@assets/icons/FolderOpenIcon.vue';
-
-marked.use({
-    gfm: true,
-    breaks: true
-});
+import Breadcrumbs from './Breadcrumbs.vue';
+import FileList from './FileList.vue';
+import FilePreview from './FilePreview.vue';
 
 export default {
     components: {
-        FileIcon,
-        FolderIcon,
-        FolderOpenIcon
+        Breadcrumbs,
+        FileList,
+        FilePreview
     },
     props: {
         owner: {

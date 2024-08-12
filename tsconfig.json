@@ -12,7 +12,8 @@
       "@pages/*": ["src/pages/*"],
       "@models/*": ["src/models/*"],
       "@api/*": ["src/api/*"],
-      "@vue/*": ["src/components/vue/*"]
+      "@vue/*": ["src/components/vue/*"],
+      "@types": ["src/types/types.d.ts"],
     }
   }
 }
