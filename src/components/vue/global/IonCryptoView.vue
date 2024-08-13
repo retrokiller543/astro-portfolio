@@ -1,7 +1,7 @@
 <template>
   <main class="is-flex">
-    <IonCryptoMenu @menuToggled="sidebarOpened" client:idle />
-    <section class="of-auto content" :class="{'main-content': sidebarOpen}">
+    <SidebarMenu :sections="sections" @menuToggled="sidebarOpened" client:load transition:presit />
+    <section class="of-auto content" :class="{ 'main-content': sidebarOpen }">
       <button @click="goBack" class="button is-back">
         Go Back
       </button>
@@ -9,28 +9,22 @@
         <slot></slot>
       </article>
     </section>
-    <button
-      client:idle
-      @click="openConfig"
-      class="button is-primary is-fixed-bottom-right"
-    >
-      Config
-    </button>
-    <IonConfigModal client:idle v-if="showModal" @close="closeModal" @submit="submitConfig" />
+    <IonConfigModal client:idle @close="closeModal" @submit="submitConfig" />
   </main>
 </template>
 
 <script lang="ts">
 import IonConfigModal from './IonConfigModal.vue';
-import IonCryptoMenu from './IonCryptoMenu.vue';
+import SidebarMenu from './SidebarMenu.vue';
 
 import { ref } from 'vue';
 import { type Config } from '../../../models/config.ts';
+import { sections } from "@/config/cryptoSidebarConfig";
 
 export default {
   components: {
     IonConfigModal,
-    IonCryptoMenu,
+    SidebarMenu,
   },
   props: {
     onConfigSaved: {
@@ -63,6 +57,11 @@ export default {
   created() {
     const savedState = window.localStorage.getItem('isMenuOpen');
     this.sidebarOpen = savedState === 'true'; // Set sidebarOpen based on localStorage
+  },
+  computed: {
+    sections() {
+      return sections;
+    },
   },
   setup() {
     const showModal = ref(false);

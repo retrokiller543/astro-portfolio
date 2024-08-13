@@ -1,19 +1,39 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": ["src/**/*.ts", "src/**/*.astro", "src/**/*.d.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.astro",
+    "src/**/*.d.ts"
+  ],
   "compilerOptions": {
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@assets/*": ["src/assets/*"],
-      "@/*": ["src/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@pages/*": ["src/pages/*"],
-      "@models/*": ["src/models/*"],
-      "@api/*": ["src/api/*"],
-      "@vue/*": ["src/components/vue/*"],
-      "@types": ["src/types/types.d.ts"],
-    }
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@/*": [
+        "src/*"
+      ],
+      "@layouts/*": [
+        "src/layouts/*"
+      ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
+      "@models/*": [
+        "src/models/*"
+      ],
+      "@api/*": [
+        "src/api/*"
+      ],
+      "@vue/*": [
+        "src/components/vue/*"
+      ]
+    },
+    "jsxImportSource": "react",
   }
 }

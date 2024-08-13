@@ -5,29 +5,43 @@
                 <span v-if="isMenuOpen">Close</span>
                 <span v-else>Open</span>
             </button>
-            <ul class="menu-list home-link">
-                <li><a href="/cryptography" :class="{ 'is-active': isActive('/cryptography') }">Home</a></li>
-            </ul>
-            <p class="menu-label">Symmetric Ciphers</p>
-            <ul class="menu-list">
-                <li>
-                    <a href="/cryptography/caesar" :class="{ 'is-active': isActive('/cryptography/caesar') }">Caesar Cipher</a>
-                    <ul>
-                        <li><a href="/cryptography/caesar/playground" :class="{ 'is-active': isActive('/cryptography/caesar/playground') }">Playground</a></li>
+            <div class="menu-content">
+                <ul class="menu-list home-link">
+                    <li>
+                        <a href="/cryptography" :class="{ 'is-active': isActive('/cryptography') }"
+                            data-astro-prefetch="load">Home</a>
+                    </li>
+                </ul>
+                <div v-for="section in sections" :key="section.name">
+                    <p class="menu-label">{{ section.name }}</p>
+                    <ul class="menu-list">
+                        <li v-for="item in section.children" :key="item.path">
+                            <a :href="item.path" :class="{ 'is-active': isActive(item.path) }"
+                                data-astro-prefetch="load">{{
+                                    item.name }}</a>
+                            <ul v-if="item.children">
+                                <li v-for="subItem in item.children" :key="subItem.path">
+                                    <a :href="subItem.path" :class="{ 'is-active': isActive(subItem.path) }"
+                                        data-astro-prefetch="load">{{
+                                            subItem.name }}</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
-                </li>
-                <li><a href="/cryptography/vigenere" :class="{ 'is-active': isActive('/cryptography/vigenere') }">Vigenere Cipher</a></li>
-            </ul>
-            <p class="menu-label">Asymmetric Ciphers</p>
-            <ul class="menu-list">
-                <li><a href="/cryptography/rsa" :class="{ 'is-active': isActive('/cryptography/rsa') }">RSA</a></li>
-            </ul>
+                </div>
+            </div>
         </aside>
     </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
+    props: {
+        sections: {
+            type: Array,
+            required: true,
+        },
+    },
     data() {
         return {
             isMenuOpen: false, // Sidebar closed by default
@@ -49,7 +63,7 @@ export default {
         },
         isActive(route) {
             return window.location.pathname === route;
-        }
+        },
     },
 };
 </script>
@@ -85,10 +99,9 @@ li {
     display: flex;
     position: -webkit-sticky;
     position: sticky;
-    top: $menu-parent-pos-top; 
-    height: 100vh; 
-    overflow-y: auto; 
-    
+    top: $menu-parent-pos-top;
+    height: 100vh;
+
     .menu {
         background-color: $menu-bg-color;
         z-index: $menu-z-index;
@@ -97,8 +110,18 @@ li {
         height: 100vh;
         transform: translateX(-100%);
         position: fixed;
-        top: $menu-pos-top; 
+        top: $menu-pos-top;
         left: 0;
+        display: flex;
+        flex-direction: column;
+
+        .menu-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-left: $padding-left;
+            padding-right: $padding-right;
+            padding-bottom: 5rem;
+        }
 
         .home-link {
             padding-top: 1em;
@@ -108,7 +131,7 @@ li {
         @media (max-width: 768px) {
             width: $menu-width-mobile;
             transform: translateX(-100%);
-            height: 100vh; 
+            height: 100vh;
         }
 
         &.is-open {
@@ -120,7 +143,7 @@ li {
             top: $button-pos-top;
             left: $button-pos-left;
             width: $button-width;
-            height: $button-height; 
+            height: $button-height;
             background-color: $button-bg-color;
             color: $button-color;
             border: none;
@@ -129,6 +152,7 @@ li {
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease-in-out;
+            z-index: $menu-z-index + 1; // Ensure it stays above the menu
 
             &:focus {
                 outline: none;
@@ -164,9 +188,6 @@ li {
         }
 
         .menu-list {
-            padding-left: $padding-left;
-            padding-right: $padding-right;
-
             li {
                 margin-bottom: $link-margin-bottom;
 

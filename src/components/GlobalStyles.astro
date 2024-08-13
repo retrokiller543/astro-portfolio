@@ -75,42 +75,14 @@
   $aurora-purple-l: 64%;
 
   // Nord color palette
-  $polar-night-0: hsl(
-    $polar-night-0-h,
-    $polar-night-0-s,
-    $polar-night-0-l
-  ); // nord0
-  $polar-night-1: hsl(
-    $polar-night-1-h,
-    $polar-night-1-s,
-    $polar-night-1-l
-  ); // nord1
-  $polar-night-2: hsl(
-    $polar-night-2-h,
-    $polar-night-2-s,
-    $polar-night-2-l
-  ); // nord2
-  $polar-night-3: hsl(
-    $polar-night-3-h,
-    $polar-night-3-s,
-    $polar-night-3-l
-  ); // nord3
+  $polar-night-0: hsl($polar-night-0-h, $polar-night-0-s, $polar-night-0-l); // nord0
+  $polar-night-1: hsl($polar-night-1-h, $polar-night-1-s, $polar-night-1-l); // nord1
+  $polar-night-2: hsl($polar-night-2-h, $polar-night-2-s, $polar-night-2-l); // nord2
+  $polar-night-3: hsl($polar-night-3-h, $polar-night-3-s, $polar-night-3-l); // nord3
 
-  $snow-storm-0: hsl(
-    $snow-storm-0-h,
-    $snow-storm-0-s,
-    $snow-storm-0-l
-  ); // nord4
-  $snow-storm-1: hsl(
-    $snow-storm-1-h,
-    $snow-storm-1-s,
-    $snow-storm-1-l
-  ); // nord5
-  $snow-storm-2: hsl(
-    $snow-storm-2-h,
-    $snow-storm-2-s,
-    $snow-storm-2-l
-  ); // nord6
+  $snow-storm-0: hsl($snow-storm-0-h, $snow-storm-0-s, $snow-storm-0-l); // nord4
+  $snow-storm-1: hsl($snow-storm-1-h, $snow-storm-1-s, $snow-storm-1-l); // nord5
+  $snow-storm-2: hsl($snow-storm-2-h, $snow-storm-2-s, $snow-storm-2-l); // nord6
 
   $frost-0: hsl($frost-0-h, $frost-0-s, $frost-0-l); // nord7
   $frost-1: hsl($frost-1-h, $frost-1-s, $frost-1-l); // nord8
@@ -118,27 +90,11 @@
   $frost-3: hsl($frost-3-h, $frost-3-s, $frost-3-l); // nord10
 
   $aurora-red: hsl($aurora-red-h, $aurora-red-s, $aurora-red-l); // nord11
-  $aurora-orange: hsl(
-    $aurora-orange-h,
-    $aurora-orange-s,
-    $aurora-orange-l
-  ); // nord12
-  $aurora-yellow: hsl(
-    $aurora-yellow-h,
-    $aurora-yellow-s,
-    $aurora-yellow-l
-  ); // nord13
-  $aurora-green: hsl(
-    $aurora-green-h,
-    $aurora-green-s,
-    $aurora-green-l
-  ); // nord14
-  $aurora-purple: hsl(
-    $aurora-purple-h,
-    $aurora-purple-s,
-    $aurora-purple-l
-  ); // nord15
-  
+  $aurora-orange: hsl($aurora-orange-h, $aurora-orange-s, $aurora-orange-l); // nord12
+  $aurora-yellow: hsl($aurora-yellow-h, $aurora-yellow-s, $aurora-yellow-l); // nord13
+  $aurora-green: hsl($aurora-green-h, $aurora-green-s, $aurora-green-l); // nord14
+  $aurora-purple: hsl($aurora-purple-h, $aurora-purple-s, $aurora-purple-l); // nord15
+
   // Override global Sass variables from the /utilities folder
 
   @use "bulma/sass/utilities" with (
@@ -238,7 +194,6 @@
   @import url("https://fonts.googleapis.com/css?family=Nunito:400,700");
   @import "@fortawesome/fontawesome-free/css/all.min.css";
 
-
   :root {
     --polar-night-0: #{$polar-night-0};
     --polar-night-1: #{$polar-night-1};
@@ -265,5 +220,9 @@
   body {
     font-family: "Nunito", sans-serif;
     height: 100%;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 </style>

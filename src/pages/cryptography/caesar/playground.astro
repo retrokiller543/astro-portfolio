@@ -1,8 +1,9 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import CaesarView from '@vue/dynamicPages/CaesarView.vue';
+import Layout from "@layouts/Layout.astro";
+import CaesarView from "@vue/dynamicPages/CaesarView.vue";
 ---
 
 <Layout title="Caesar Encryption - Playground">
-    <CaesarView client:only="vue"/>
+  <!-- TODO: Move the CaesarView to the new CryptoView -->
+  <CaesarView client:only="vue" />
 </Layout>

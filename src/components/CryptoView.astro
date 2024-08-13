@@ -1,0 +1,98 @@
+---
+import IonConfigModal from "@vue/global/IonConfigModal.vue";
+import SidebarMenu from "@vue/global/SidebarMenu.vue";
+import { sections } from "@/config/cryptoSidebarConfig";
+---
+
+<main class="is-flex">
+  <SidebarMenu sections={sections} client:only="vue" transition:persist-props />
+  <section class="of-auto content" id="content-section" transition:name="main-content">
+    <button id="back-button" class="button is-back"> Go Back </button>
+    <article class="shifted">
+      <slot />
+    </article>
+  </section>
+  <IonConfigModal id="config-modal" client:only="vue" />
+  <script is:inline lang="ts">
+    document.addEventListener("astro:page-load", () => {
+      let sidebarOpen = false;
+
+      // Update the sidebar class based on open state
+      function updateSidebarClass() {
+        const section = document.getElementById("content-section");
+        if (sidebarOpen) {
+          section.classList.add("main-content");
+        } else {
+          section.classList.remove("main-content");
+        }
+      }
+
+      const savedState = window.localStorage.getItem("isMenuOpen");
+      sidebarOpen = savedState === "true";
+      updateSidebarClass();
+
+      // Attach event listeners
+      const backButton = document.getElementById("back-button");
+
+      if (backButton) {
+        backButton.addEventListener("click", () => {
+          window.history.back();
+        });
+      }
+
+      const menuToggle = document.getElementById("menu-toggle-button");
+
+      if (menuToggle) {
+        menuToggle.addEventListener("click", () => {
+          sidebarOpen = !sidebarOpen;
+          updateSidebarClass();
+        });
+      }
+    });
+  </script>
+</main>
+
+<style lang="scss">
+  $z-index-fixed-button: 41;
+  $fixed-bottom-spacing: 1rem;
+  $back-button-top: 6rem;
+  $back-button-left: 0rem;
+  $content-padding-top: 5rem;
+  $content-margin-left: 2rem;
+  $content-margin-right: 2rem;
+  $content-width: 100%;
+  $content-padding-right: 4rem;
+  $main-content-margin-left: 17rem;
+  $shifted-margin-top: 5rem;
+
+  .is-fixed-bottom-right {
+    position: fixed;
+    bottom: $fixed-bottom-spacing;
+    right: $fixed-bottom-spacing;
+    z-index: $z-index-fixed-button;
+  }
+
+  .is-back {
+    position: absolute;
+    top: $back-button-top;
+    left: $back-button-left;
+  }
+
+  .content {
+    transition: margin-left 0.3s ease-in-out;
+    padding-top: $content-padding-top;
+    margin-left: $content-margin-left;
+    margin-right: $content-margin-right;
+    width: $content-width;
+    position: relative;
+    padding-right: $content-padding-right;
+  }
+
+  .main-content {
+    margin-left: $main-content-margin-left;
+  }
+
+  .shifted {
+    margin-top: $shifted-margin-top;
+  }
+</style>

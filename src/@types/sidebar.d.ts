@@ -1,6 +1,3 @@
-/// <reference path="../.astro/env.d.ts" />
-/// <reference types="astro/client" />
-
 export interface Path {
   path: string;
   name: string;

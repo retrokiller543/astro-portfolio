@@ -1,19 +1,22 @@
 <template>
-    <div class="file-explorer">
+    <div v-if="loading" class="file-explorer">
         <!-- Breadcrumb for navigation -->
         <Breadcrumbs :breadcrumbs="breadcrumbs" @navigate="navigateTo" />
 
         <!-- Main content area with directory listing and file preview side by side -->
         <div class="content-area">
             <!-- Panel for directory listing -->
-            <FileList :files="files" :currentPath="currentPath" :repo="repo" :parentPath="parentPath" :navigateTo="navigateTo" :handleClick="handleClick" />
-            
+            <FileList :files="files" :currentPath="currentPath" :repo="repo" :parentPath="parentPath"
+                :navigateTo="navigateTo" :handleClick="handleClick" />
+
             <!-- File preview, only render if a file is selected -->
-            <FilePreview
-                v-if="selectedFileContent"
-                :file="{ name: selectedFileName, content: selectedFileContent }"
-            />
+            <FilePreview v-if="selectedFileContent" :file="{ name: selectedFileName, content: selectedFileContent }" />
         </div>
+    </div>
+
+    <div v-else class="spinner">
+        <div class="loader is-centered "></div>
+        <p>Loading...</p>
     </div>
 </template>
 
@@ -45,6 +48,13 @@ export default {
             type: String,
             default: ''
         }
+    },
+    unmounted() {
+        console.log('Unmounted');
+    },
+
+    mounted() {
+        console.log('Mounted');
     },
     setup(props) {
         const files = ref([]);
@@ -80,13 +90,13 @@ export default {
                         if (extA < extB) return -1;
                         if (extA > extB) return 1;
                     }
-                    
+
                     return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
                 });
 
                 // check for readme file
                 const readmeFile = files.value.find(file => file.name === 'README.md');
-                
+
                 if (readmeFile) {
                     fetchFileContent(readmeFile.path);
                 }
@@ -95,7 +105,7 @@ export default {
             } catch (error) {
                 console.error('Error fetching files:', error);
             } finally {
-                loading.value = false;
+                //loading.value = false;
             }
         };
 
@@ -194,21 +204,28 @@ export default {
     &.open-file {
         width: 30%;
     }
-
-    
 }
-[data-theme="nord"]
-.panel-heading {
+
+.spinner {
+    // verticly center the content of the spinner  with the loader ontop of the text
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    font-size: 5rem;
+}
+
+[data-theme="nord"] .panel-heading {
     color: var(--bulma-text-dark);
 }
 
-[data-theme="dark"]
-.panel-heading {
+[data-theme="dark"] .panel-heading {
     color: var(--bulma-text-dark)
 }
 
-[data-them="light"]
-.panel-heading {
+[data-them="light"] .panel-heading {
     color: hsl(var(--bulma-panel-h), var(--bulma-panel-s), var(--bulma-panel-heading-color-l));
 }
 

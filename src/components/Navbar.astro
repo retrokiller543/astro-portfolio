@@ -5,13 +5,7 @@ import ThemeSelector from "./vue/ThemeSelector.vue";
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/" id="navbar-logo">Portfolio</a>
-    <a
-      role="button"
-      class="navbar-burger"
-      aria-label="menu"
-      aria-expanded="false"
-      data-target="navMenu"
-    >
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -50,10 +44,7 @@ import ThemeSelector from "./vue/ThemeSelector.vue";
 
     document.addEventListener("DOMContentLoaded", () => {
       // Get all "navbar-burger" elements
-      const $navbarBurgers = Array.prototype.slice.call(
-        document.querySelectorAll(".navbar-burger"),
-        0
-      );
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll(".navbar-burger"), 0);
 
       // Add a click event on each of them
       $navbarBurgers.forEach((el) => {
@@ -72,7 +63,7 @@ import ThemeSelector from "./vue/ThemeSelector.vue";
 </nav>
 
 <style lang="scss">
-  $z-index: 1000;
+  $z-index: 39;
 
   .navbar {
     z-index: $z-index;

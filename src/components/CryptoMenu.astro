@@ -1,0 +1,235 @@
+---
+interface Props {
+  sections: Section[];
+}
+
+export interface Path {
+  path: string;
+  name: string;
+  icon?: any;
+  children?: Path[];
+}
+
+export interface Section {
+  name: string;
+  path: string;
+  children?: Path[];
+}
+
+const { sections } = Astro.props;
+---
+
+<div class="crypto-menu" transition:name="sidebar">
+  <aside id="crypto-menu" class="menu">
+    <button id="menu-toggle-button" class="menu-toggle-button">Open</button>
+    <ul class="menu-list home-link">
+      <li><a href="/cryptography">Home</a></li>
+    </ul>
+    {
+      sections.map((section) => (
+        <div>
+          <p class="menu-label">{section.name}</p>
+          <ul class="menu-list">
+            {section.children &&
+              section.children.map((item) => (
+                <li>
+                  <a href={item.path}>{item.name}</a>
+                  {item.children && (
+                    <ul>
+                      {item.children.map((subItem) => (
+                        <li>
+                          <a href={subItem.path}>{subItem.name}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+          </ul>
+        </div>
+      ))
+    }
+  </aside>
+  <script is:inline data-astro-rerun lang="ts">
+    // Initialize the menu when the document is loaded
+    window.addEventListener("DOMContentLoaded", () => {
+      const menuId = "crypto-menu"; // Unique ID to reference the menu
+      const buttonId = "menu-toggle-button"; // Unique ID for the toggle button
+
+      function initMenu() {
+        const menu = document.getElementById(menuId);
+        const button = document.getElementById(buttonId);
+
+        if (!menu || !button) return;
+
+        let isMenuOpen = false;
+
+        // Retrieve menu state from localStorage
+        const savedState = localStorage.getItem("isMenuOpen");
+        if (savedState !== null) {
+          isMenuOpen = JSON.parse(savedState);
+          updateMenuState(isMenuOpen, menu, button);
+        }
+
+        // Toggle menu and save state
+        button.addEventListener("click", () => {
+          console.log(isMenuOpen);
+          isMenuOpen = !isMenuOpen;
+          localStorage.setItem("isMenuOpen", isMenuOpen.toString());
+          updateMenuState(isMenuOpen, menu, button);
+        });
+
+        // Set active state for links
+        const links = menu.querySelectorAll("a");
+        links.forEach((link) => {
+          if (window.location.pathname === link.getAttribute("href")) {
+            link.classList.add("is-active");
+          }
+        });
+      }
+
+      function updateMenuState(isOpen, menu, button) {
+        if (isOpen) {
+          menu.classList.add("is-open");
+          button.classList.add("is-open");
+          button.textContent = "Close";
+        } else {
+          menu.classList.remove("is-open");
+          button.classList.remove("is-open");
+          button.textContent = "Open";
+        }
+      }
+      console.log("loaded");
+      initMenu();
+    });
+  </script>
+</div>
+
+<style lang="scss">
+  // Variable Definitions
+  $menu-pos-top: 4rem;
+  $menu-parent-pos-top: 10%;
+  $button-pos-top: -1.5rem;
+  $button-pos-left: 15rem;
+  $z-index: 38;
+  $menu-width: 15rem;
+  $menu-width-mobile: 100%;
+  $menu-z-index: 40;
+  $button-width: 50px;
+  $button-height: 40px;
+  $button-bg-color: var(--primary);
+  $button-color: var(--white);
+  $button-hover-bg-color: var(--primary-color-dark);
+  $menu-bg-color: var(--bulma-background);
+  $home-link-bg-color: var(--primary-color-dark);
+  $menu-label-bg-color: var(--primary-color-dark);
+  $padding-left: 1.5em;
+  $padding-right: 0.5rem;
+  $link-margin-bottom: 0.5em;
+
+  li {
+    list-style: none;
+  }
+
+  .crypto-menu {
+    z-index: $z-index;
+    display: flex;
+    position: -webkit-sticky;
+    position: sticky;
+    top: $menu-parent-pos-top;
+    height: 100vh;
+    overflow-y: auto;
+
+    .menu {
+      background-color: $menu-bg-color;
+      z-index: $menu-z-index;
+      width: $menu-width;
+      transition: transform 0.3s ease-in-out;
+      height: 100vh;
+      transform: translateX(-100%);
+      position: fixed;
+      top: $menu-pos-top;
+      left: 0;
+
+      .home-link {
+        padding-top: 1em;
+        background-color: $home-link-bg-color;
+      }
+
+      @media (max-width: 768px) {
+        width: $menu-width-mobile;
+        transform: translateX(-100%);
+        height: 100vh;
+      }
+
+      &.is-open {
+        transform: translateX(0);
+      }
+
+      .menu-toggle-button {
+        position: absolute;
+        top: $button-pos-top;
+        left: $button-pos-left;
+        width: $button-width;
+        height: $button-height;
+        background-color: $button-bg-color;
+        color: $button-color;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease-in-out;
+
+        &:focus {
+          outline: none;
+        }
+
+        &:hover {
+          background-color: $button-hover-bg-color;
+        }
+
+        span {
+          font-weight: bold;
+        }
+
+        &.is-open {
+          left: calc($button-pos-left - 4rem);
+
+          @media screen and (max-width: 768px) {
+            right: -35rem;
+            left: 0;
+          }
+        }
+
+        @media (max-width: 768px) {
+          left: 41rem;
+          width: auto;
+          padding: 0 10px;
+        }
+      }
+
+      .menu-label {
+        padding: 1em;
+        background-color: $menu-label-bg-color;
+      }
+
+      .menu-list {
+        padding-left: $padding-left;
+        padding-right: $padding-right;
+
+        li {
+          margin-bottom: $link-margin-bottom;
+
+          a {
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>

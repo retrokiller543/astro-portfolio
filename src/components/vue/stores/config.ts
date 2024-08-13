@@ -1,15 +1,19 @@
-import { ref, computed, watch } from 'vue';
-import { defineStore } from 'pinia';
-import { fetchConfig, type Config } from '@api/ApiClient';
-import { ALPHABET } from '@models/config';
+import { ref, computed, watch } from "vue";
+import { defineStore } from "pinia";
+import { fetchConfig, type Config } from "@api/ApiClient";
+import { ALPHABET } from "@models/config";
 
-export const useConfigStore = defineStore('config', () => {
+export const useConfigStore = defineStore("config", () => {
   // Load initial config from localStorage if available, otherwise use defaults
-  const storedConfig = localStorage.getItem('config');
-  const config = ref<Config>(storedConfig ? JSON.parse(storedConfig) : {
-    alphabet: ALPHABET,
-    base64: false,
-  });
+  const storedConfig = localStorage.getItem("config");
+  const config = ref<Config>(
+    storedConfig
+      ? JSON.parse(storedConfig)
+      : {
+          alphabet: ALPHABET,
+          base64: false,
+        }
+  );
 
   // Fetch and set the config asynchronously
   async function fetchAndSetConfig() {
@@ -32,13 +36,17 @@ export const useConfigStore = defineStore('config', () => {
 
   // Save config to localStorage
   function saveConfigToLocalStorage() {
-    localStorage.setItem('config', JSON.stringify(config.value));
+    localStorage.setItem("config", JSON.stringify(config.value));
   }
 
   // Watch for changes in config and save them to localStorage
-  watch(config, (newConfig) => {
-    saveConfigToLocalStorage();
-  }, { deep: true });
+  watch(
+    config,
+    (newConfig) => {
+      saveConfigToLocalStorage();
+    },
+    { deep: true }
+  );
 
   // Fetch the config on store initialization
   fetchAndSetConfig();

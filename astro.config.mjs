@@ -5,8 +5,9 @@ import topLevelAwait from "vite-plugin-top-level-await";
 import icon from "astro-icon";
 import vue from "@astrojs/vue";
 import sitemap from "@astrojs/sitemap";
-
 import vercel from "@astrojs/vercel/serverless";
+
+import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,7 +21,11 @@ export default defineConfig({
     serverIslands: true,
     env: {
       schema: {
-        API_BASE_URL: envField.string({context: 'client', access: 'public', default: 'http://localhost:6968'})
+        API_BASE_URL: envField.string({
+          context: 'client',
+          access: 'public',
+          default: 'http://localhost:6968'
+        })
       }
     }
   },
@@ -31,7 +36,7 @@ export default defineConfig({
       isCustomElement: tag => tag.startsWith('Ion-')
     },
     devtools: false
-  }), sitemap()],
+  }), sitemap(), react()],
   vite: {
     plugins: [wasm(), topLevelAwait()],
     resolve: {
