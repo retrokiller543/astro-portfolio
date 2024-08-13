@@ -13,3 +13,8 @@ export interface Section {
   path: string;
   children?: Path[];
 }
+
+export interface FileData {
+  name: string;
+  content: string;
+}

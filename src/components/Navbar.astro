@@ -2,11 +2,10 @@
 import ThemeSelector from "./vue/ThemeSelector.vue";
 ---
 
-<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+<nav class="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="/" id="navbar-logo">Portfolio</a>
+    <a class="navbar-item has-text-weight-bold" href="/" id="navbar-logo">Portfolio</a>
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
-      <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -26,50 +25,60 @@ import ThemeSelector from "./vue/ThemeSelector.vue";
       </div>
     </div>
     <div class="navbar-end">
-      <ThemeSelector client:only="vue" />
+      <div class="navbar-item">
+        <ThemeSelector client:only="vue" />
+      </div>
     </div>
   </div>
-  <script>
-    // JavaScript to handle adding 'is-active' class
-    document.addEventListener("DOMContentLoaded", () => {
-      const links = document.querySelectorAll(".navbar-item");
-      links.forEach((link) => {
-        if (window.location.pathname === link.getAttribute("href")) {
-          if (link.id !== "navbar-logo") {
-            link.classList.add("is-active");
-          }
-        }
-      });
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
-      // Get all "navbar-burger" elements
-      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll(".navbar-burger"), 0);
-
-      // Add a click event on each of them
-      $navbarBurgers.forEach((el) => {
-        el.addEventListener("click", () => {
-          // Get the target from the "data-target" attribute
-          const target = el.dataset.target;
-          const $target = document.getElementById(target);
-
-          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-          el.classList.toggle("is-active");
-          $target!.classList.toggle("is-active");
-        });
-      });
-    });
-  </script>
 </nav>
 
 <style lang="scss">
-  $z-index: 39;
+  $navbar-background: #2c3e50;
+  $navbar-text-color: #ecf0f1;
+  $navbar-hover-color: lighten($navbar-text-color, 10%);
+  $active-link-border-color: #3498db;
 
   .navbar {
-    z-index: $z-index;
+    background-color: $navbar-background;
+    color: $navbar-text-color;
+
+    .navbar-item,
+    .navbar-link {
+      color: $navbar-text-color;
+      &:hover {
+        color: $navbar-hover-color;
+        background-color: transparent;
+      }
+    }
+
+    .navbar-item.is-active {
+      font-weight: bold;
+      border-bottom: 2px solid $active-link-border-color;
+    }
+
+    .navbar-burger {
+      color: $navbar-text-color;
+      &:hover {
+        color: $navbar-hover-color;
+      }
+      span {
+        background-color: $navbar-text-color;
+        transition: background-color 0.3s ease;
+      }
+    }
+
+    .navbar-menu {
+      .navbar-item {
+        border-radius: 16px;
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
   }
 
-  .navbar-item.is-active {
-    font-weight: bold;
+  // Ensure the ThemeSelector is well-aligned and matches the styling
+  .navbar-end .navbar-item {
+    padding-right: 1.5rem;
   }
 </style>

@@ -34,7 +34,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 export default {
     props: {
         sections: {
@@ -44,11 +44,10 @@ export default {
     },
     data() {
         return {
-            isMenuOpen: false, // Sidebar closed by default
+            isMenuOpen: true,
         };
     },
     created() {
-        // Retrieve menu state from localStorage if it exists
         const savedState = localStorage.getItem('isMenuOpen');
         if (savedState !== null) {
             this.isMenuOpen = JSON.parse(savedState);
@@ -70,10 +69,11 @@ export default {
 
 <style scoped lang="scss">
 // Variable Definitions
-$menu-pos-top: 4rem;
+$menu-pos-top: 3.5rem;
 $menu-parent-pos-top: 10%;
-$button-pos-top: -1.5rem;
-$button-pos-left: 15rem;
+$button-pos-top: 6rem;
+$button-pos-left-close: 16rem;
+$button-pos-left-open: 16rem;
 $z-index: 38;
 $menu-width: 15rem;
 $menu-width-mobile: 100%;
@@ -141,7 +141,7 @@ li {
         .menu-toggle-button {
             position: absolute;
             top: $button-pos-top;
-            left: $button-pos-left;
+            left: $button-pos-left-close;
             width: $button-width;
             height: $button-height;
             background-color: $button-bg-color;
@@ -167,7 +167,7 @@ li {
             }
 
             &.is-open {
-                left: calc($button-pos-left - 4rem);
+                left: $button-pos-left-open;
 
                 @media screen and (max-width: 768px) {
                     right: -35rem;

@@ -1,4 +1,4 @@
-import type { Section } from "@/env";
+import type { Section } from "@types";
 
 export const sections: Section[] = [
   {
@@ -10,6 +10,9 @@ export const sections: Section[] = [
         name: "Caesar Cipher",
         children: [
           { path: "/cryptography/caesar#description", name: "Description" },
+          { path: "/cryptography/caesar#explination", name: "Explination" },
+          { path: "/cryptography/caesar#context", name: "Historical context" },
+          { path: "/cryptography/caesar#analysis", name: "Analysis" },
           { path: "/cryptography/caesar#source-code", name: "Source code" },
           { path: "/cryptography/caesar/playground", name: "Playground" },
         ],

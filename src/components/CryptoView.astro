@@ -6,20 +6,22 @@ import { sections } from "@/config/cryptoSidebarConfig";
 
 <main class="is-flex">
   <SidebarMenu sections={sections} client:only="vue" transition:persist-props />
-  <section class="of-auto content" id="content-section" transition:name="main-content">
+  <section class="of-auto content main-content" id="content-section" transition:name="main-content">
     <button id="back-button" class="button is-back"> Go Back </button>
     <article class="shifted">
       <slot />
     </article>
   </section>
-  <IonConfigModal id="config-modal" client:only="vue" />
-  <script is:inline lang="ts">
+  <IonConfigModal id="config-modal" client:only="vue" transition:persist-props />
+  <script is:inline data-astro-rerun lang="ts">
     document.addEventListener("astro:page-load", () => {
-      let sidebarOpen = false;
+      let sidebarOpen = true;
 
       // Update the sidebar class based on open state
       function updateSidebarClass() {
         const section = document.getElementById("content-section");
+        console.log(section);
+
         if (sidebarOpen) {
           section.classList.add("main-content");
         } else {
@@ -28,7 +30,9 @@ import { sections } from "@/config/cryptoSidebarConfig";
       }
 
       const savedState = window.localStorage.getItem("isMenuOpen");
-      sidebarOpen = savedState === "true";
+      if (savedState !== null) {
+        sidebarOpen = JSON.parse(savedState);
+      }
       updateSidebarClass();
 
       // Attach event listeners
@@ -63,7 +67,7 @@ import { sections } from "@/config/cryptoSidebarConfig";
   $content-width: 100%;
   $content-padding-right: 4rem;
   $main-content-margin-left: 17rem;
-  $shifted-margin-top: 5rem;
+  $shifted-margin-top: 7rem;
 
   .is-fixed-bottom-right {
     position: fixed;

@@ -32,6 +32,9 @@
       ],
       "@vue/*": [
         "src/components/vue/*"
+      ],
+      "@types": [
+        "src/env.d.ts"
       ]
     },
     "jsxImportSource": "react",

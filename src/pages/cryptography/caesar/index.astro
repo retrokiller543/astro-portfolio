@@ -10,101 +10,56 @@ import FileExplorer from "@vue/FileExplorer.vue";
       <div class="hero-body" id="description">
         <div class="container">
           <h1 class="title">Caesar Encryption</h1>
-
           <h2 class="subtitle">The classic Caesar Cipher</h2>
 
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nisi mollitia commodi ad amet dolores iusto ipsum
-            deserunt harum fugiat aliquid totam ducimus quaerat hic, doloribus ipsa error adipisci suscipit atque magni
-            sit, doloremque voluptatum. Fuga quas officia eligendi veritatis accusantium animi deserunt facilis
-            assumenda sunt culpa, non ad est rerum cupiditate, soluta in, earum consequatur provident iure perspiciatis
-            ea dolorum ipsam harum! Illo, eligendi pariatur. Asperiores fugiat, blanditiis fugit eaque suscipit quae
-            quidem! Debitis fugit adipisci expedita soluta ducimus id illo. Enim similique molestias ipsam esse
-            architecto, incidunt, quisquam libero voluptatum impedit quas earum nostrum sapiente iusto adipisci?
-            Aspernatur, consectetur. Obcaecati, animi omnis? Totam ipsa officia facere numquam aperiam ea, nihil
-            incidunt praesentium similique eveniet architecto, consectetur iusto optio commodi quas magnam ipsam culpa.
-            Illo ut sit optio iste exercitationem mollitia non ex doloribus ratione beatae corrupti et dicta nostrum
-            minima ipsam magni quam fugiat officiis fuga, molestias, libero quisquam commodi. Rem, aspernatur est
-            exercitationem harum accusamus hic tempora? Culpa perferendis consectetur explicabo, odio deserunt non ullam
-            doloremque vitae modi aliquam ut alias? Laboriosam dolor praesentium voluptatem rerum eius sed non! Dolor
-            odio culpa reprehenderit beatae nesciunt quis totam nobis porro et reiciendis! Eveniet culpa quis ratione
-            est ut sunt animi odit tempora ab atque? Optio nihil aut quas, iusto perferendis consequatur ipsa libero
-            tempora quasi explicabo, adipisci ullam dolores expedita. Quia ducimus eveniet unde ab veniam saepe. Aliquam
-            id quia quis rem non impedit neque expedita consectetur earum laborum adipisci, amet ipsam quam nisi?
-            Consequatur veniam, obcaecati magnam amet ducimus nihil! Distinctio obcaecati autem magnam minus saepe
-            delectus voluptatibus, explicabo soluta, nam qui facilis atque iusto blanditiis. Officia ducimus corporis
-            aspernatur ipsum sequi eaque fugiat enim amet impedit autem! Repellendus sit expedita ut illum. Voluptate
-            assumenda consequuntur modi at impedit nobis debitis autem ab, quam iure dignissimos temporibus aut ea natus
-            vitae officia, voluptas incidunt voluptatibus quidem aliquam earum nisi provident ex. Enim, animi ea
-            pariatur maxime iure soluta aut? Harum perspiciatis at architecto ducimus ipsam eligendi commodi hic
-            incidunt! Repellat quo, maiores, aspernatur est omnis architecto sequi, at molestias fugiat perferendis
-            eveniet iure! Esse assumenda non veritatis, natus placeat, harum ea quidem expedita explicabo blanditiis
-            nesciunt suscipit pariatur! Ut molestiae dicta, cum unde aliquid modi hic quae odit esse soluta, nesciunt
-            voluptatibus id ipsam nobis? Dolore quas saepe suscipit. Odio aliquam ex adipisci amet error eveniet
-            voluptatibus repudiandae atque. Fugit accusamus debitis, quae pariatur maiores placeat voluptatem cupiditate
-            odio adipisci nobis asperiores hic sint error quibusdam dicta, ducimus suscipit dolorem voluptas porro.
-            Quidem optio quis, minus facere eveniet maxime veritatis accusamus delectus, dolores facilis dolorem
-            corporis cumque. Eligendi cumque nesciunt assumenda esse, impedit quos sint ratione enim officia doloremque
-            voluptate adipisci possimus ipsa soluta autem, accusamus cupiditate voluptatibus maiores! Minus corrupti
-            nisi perferendis provident ut ea ipsa sunt commodi, accusamus debitis veritatis, consectetur qui rem
-            exercitationem, esse odio. Mollitia ut consequatur labore reiciendis necessitatibus, dolores similique
-            officia magni laboriosam impedit fuga beatae odit dolor accusamus perferendis! Optio quasi nisi praesentium
-            cum libero molestias magni modi unde, laudantium accusamus ut rem repellendus explicabo? Commodi possimus,
-            similique accusantium facilis inventore delectus. Perspiciatis accusantium, rem, officiis ipsam eius numquam
-            minus suscipit exercitationem ratione officia amet quas, soluta at! Praesentium pariatur voluptates animi
-            reprehenderit, corporis sed sapiente, ut temporibus velit odit id, repellendus itaque! Numquam, eaque magni
-            exercitationem repellendus eligendi harum, dicta minus quam eius commodi hic delectus quidem molestias.
-            Aspernatur tempora id ipsam rerum laboriosam a molestiae in. Quam facilis placeat cumque repellat,
-            recusandae nostrum voluptas temporibus ea fugiat laborum ad officia natus sed esse consequatur non eaque
-            exercitationem, doloremque modi earum iste excepturi architecto. Eum suscipit dignissimos quisquam commodi
-            quasi?
-          </p>
+          <!-- Detailed Explanation of the Cipher -->
+          <section class="section" id="explanation">
+            <h3 class="title">How the Caesar Cipher Works</h3>
+            <p class="content">
+              The Caesar Cipher is a type of substitution cipher where each letter in the plaintext is shifted by a
+              fixed number of positions in the alphabet. For example, with a shift of 3, the letter 'A' becomes 'D', 'B'
+              becomes 'E', and so on. The process is as follows:
+            </p>
+            <ul>
+              <li>Select a number for the shift value (e.g., 3).</li>
+              <li>Shift each letter in the plaintext by the chosen value.</li>
+              <li>Wrap around the alphabet if necessary (e.g., 'Z' with a shift of 3 becomes 'C').</li>
+            </ul>
+            <p>
+              The cipher text is the result of applying the shift to the entire message. For instance, "HELLO" with a
+              shift of 3 becomes "KHOOR".
+            </p>
+          </section>
 
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim doloremque perferendis temporibus atque culpa
-            deserunt nulla voluptate ex ducimus hic. Recusandae repellat doloribus accusamus totam modi, ea voluptates
-            ullam inventore libero dolorem. Quia velit tempora, et facere quod maxime quas fuga obcaecati earum rerum
-            iste consequatur. Suscipit amet ipsam veritatis distinctio perspiciatis consectetur ullam quidem veniam
-            temporibus eos molestias quasi deserunt enim unde voluptatem architecto sunt inventore laboriosam,
-            dignissimos odio commodi et officiis mollitia cumque. Laborum neque animi quos deleniti numquam eum debitis
-            harum, magni officiis optio molestias molestiae provident aliquid dicta, tempora veniam, saepe quibusdam
-            accusamus. Itaque, beatae architecto reprehenderit earum consequatur dicta in, quis cupiditate quisquam
-            corrupti, tempora iure at culpa molestias harum sint? Perspiciatis deserunt nisi, beatae ut inventore
-            corporis id consequatur laboriosam eum culpa voluptatem quasi soluta dolorem aperiam iste illum ratione enim
-            unde amet labore ea rem quis animi. Iusto, nesciunt magnam? Aut corrupti totam at quis vero aperiam labore
-            veritatis cumque. Consectetur hic nobis saepe obcaecati alias possimus dolor nulla iure blanditiis, rerum
-            veniam. Possimus culpa modi cumque! Necessitatibus nobis accusamus expedita repudiandae, quidem vel
-            reiciendis sunt corporis totam soluta error. Nesciunt itaque, accusantium soluta facilis suscipit tempore
-            cumque repellat facere rerum aspernatur voluptatibus accusamus sint incidunt odio quos molestias beatae aut
-            earum eligendi molestiae architecto hic modi numquam eum. Quae magni eaque, quisquam voluptate aut
-            architecto eos qui maxime voluptates praesentium, facere fuga. Voluptatem explicabo veniam vero sed natus,
-            et delectus modi ad quasi voluptates, laborum, facere ipsum facilis soluta vel. Provident obcaecati, aliquid
-            beatae ut et id nostrum perspiciatis. Fugiat, illum obcaecati. Dolorum cum dolorem quisquam tempora omnis
-            consequuntur odio laudantium magnam, vel sed nihil dolore alias similique beatae possimus sapiente sint, eum
-            quos nam sequi aut labore reprehenderit et autem. Suscipit neque laudantium nostrum quasi officiis! Expedita
-            fugit magni temporibus dicta tempore amet ad sint maxime laborum illum ipsum reprehenderit vitae, ea fugiat
-            labore! Illum saepe est facilis possimus officiis quo, debitis et iure hic inventore impedit pariatur dolor,
-            explicabo officia accusantium perspiciatis, eos unde? Laudantium incidunt hic rem est accusamus. Ea fugiat
-            sint explicabo impedit. In doloremque placeat, unde voluptatibus, tempore rem debitis omnis saepe velit quae
-            animi iusto. In qui temporibus error omnis voluptatum excepturi dolorum, voluptate sit expedita totam quas
-            recusandae natus provident dolores placeat, eligendi ab perferendis assumenda soluta ratione, ducimus optio
-            saepe fuga. Nihil laboriosam magni voluptas, quasi vitae asperiores dolorem fugit accusantium magnam
-            sapiente voluptate ullam doloremque maxime non. Accusantium nulla ullam perspiciatis dolor ducimus vero a
-            repellendus, eius placeat! Ipsa facilis architecto aperiam hic neque impedit molestiae ratione quos cumque
-            facere, beatae, doloribus asperiores autem rem eligendi accusantium. Possimus minus nulla culpa incidunt,
-            ut, modi a magni nostrum consequatur mollitia, totam cupiditate obcaecati? Nobis modi iste officiis sapiente
-            nemo assumenda eius, ad repellendus esse id maiores magnam asperiores ab? Quisquam odio neque veritatis
-            natus, a, architecto corporis similique alias qui, commodi eos nam id sint accusantium? Quibusdam eveniet
-            quod explicabo sunt eos pariatur voluptatum! Necessitatibus numquam natus quidem maxime magnam ad sequi iste
-            quae quas tempora molestiae voluptatem aspernatur fugiat tenetur odit voluptatum corrupti qui deleniti ex
-            libero, veritatis repellat saepe delectus adipisci! Error enim, illum saepe labore quia atque iste
-            accusantium beatae obcaecati assumenda perspiciatis. Corrupti ullam perspiciatis veniam deserunt eius
-            consequatur dolorem. Magni deleniti corrupti nisi ad dicta facilis atque incidunt alias veniam nam,
-            molestias distinctio fuga ab, animi, commodi aut voluptas corporis non perspiciatis! Ipsum magnam neque
-            minus asperiores! Ex aliquam quod dolores minima dolor id cum cumque perspiciatis. Commodi assumenda magni
-            alias quaerat sunt repellendus fuga enim nemo, nobis fugiat, tenetur, dolore placeat impedit. Molestias
-            minus quam officiis odit ipsam.
-          </p>
+          <!-- Historical Context -->
+          <section class="section" id="context">
+            <h3 class="title">Historical Context</h3>
+            <p>
+              The Caesar Cipher is named after Julius Caesar, who reportedly used this cipher to protect messages of
+              military significance. By shifting the alphabet, he could communicate sensitive information to his
+              generals securely. This simple method of encryption was effective in its time, as most adversaries were
+              not equipped to easily decrypt the messages. The Caesar Cipher represents one of the earliest known forms
+              of encryption, laying the groundwork for more complex cryptographic techniques developed later.
+            </p>
+          </section>
+
+          <!-- Cryptanalysis -->
+          <section class="section" id="analysis">
+            <h3 class="title">Cryptanalysis of the Caesar Cipher</h3>
+            <p>
+              Although the Caesar Cipher is simple, it is not secure by modern standards. The primary weakness of the
+              Caesar Cipher lies in its limited number of possible keys—only, the nummber of different shifts (excluding
+              the shift by 0, which would leave the text unchanged) would be the lenght of the alphabet used. As a
+              result, the cipher is vulnerable to brute-force attacks, where an attacker systematically tries all
+              possible shifts until the plaintext is revealed.
+            </p>
+            <p>
+              Another method of breaking the Caesar Cipher is frequency analysis. In any given language, certain letters
+              appear more frequently than others (for example, 'E' is the most common letter in English). By comparing
+              the frequency of letters in the cipher text to the expected frequency of letters in the language, one can
+              deduce the likely shift value and decrypt the message.
+            </p>
+          </section>
 
           <a href="/cryptography/caesar/playground" class="button is-link">Go to Playground</a>
         </div>

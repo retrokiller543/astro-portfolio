@@ -89,7 +89,7 @@ $content-margin-right: 2rem;
 $content-width: 100%;
 $content-padding-right: 4rem;
 $main-content-margin-left: 17rem;
-$shifted-margin-top: 5rem;
+$shifted-margin-top: 7rem;
 
 .is-fixed-bottom-right {
   position: fixed;
