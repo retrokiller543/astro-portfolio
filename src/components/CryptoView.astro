@@ -1,11 +1,11 @@
 ---
 import IonConfigModal from "@vue/global/IonConfigModal.vue";
-import SidebarMenu from "@vue/global/SidebarMenu.vue";
+import CryptoMenu from "./CryptoMenu.astro";
 import { sections } from "@/config/cryptoSidebarConfig";
 ---
 
 <main class="is-flex">
-  <SidebarMenu sections={sections} client:only="vue" transition:persist-props />
+  <CryptoMenu sections={sections} transition:persist />
   <section class="of-auto content main-content" id="content-section" transition:name="main-content">
     <button id="back-button" class="button is-back"> Go Back </button>
     <article class="shifted">
@@ -20,7 +20,6 @@ import { sections } from "@/config/cryptoSidebarConfig";
       // Update the sidebar class based on open state
       function updateSidebarClass() {
         const section = document.getElementById("content-section");
-        console.log(section);
 
         if (sidebarOpen) {
           section.classList.add("main-content");

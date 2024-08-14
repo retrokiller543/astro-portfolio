@@ -1,0 +1,75 @@
+---
+import BlogApiClient, { type BlogPost } from "@/api/BlogClient";
+import type { PaginateFunction } from "astro";
+
+// Define the structure of the page prop
+interface PageProps {
+  currentPage: number;
+  lastPage: number;
+  data: BlogPost[];
+}
+
+// Define the interface for the props
+interface Props {
+  page: PageProps;
+}
+
+// Astro function to get static paths with pagination
+export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
+  const client = new BlogApiClient();
+  const posts = await client.getPosts();
+
+  // Paginate the posts, with a specified page size (e.g., 5 posts per page)
+  return paginate(posts!, { pageSize: 5 });
+}
+
+// Destructure the props to get the page data
+const { page }: Props = Astro.props;
+const posts: BlogPost[] = page.data;
+---
+
+<h1 class="title">Blog Posts</h1>
+<ul>
+  {
+    posts.map((post) => {
+      return (
+        <li>
+          <a href={`/blog/posts/${post.id?.id.String}`}>{post.title}</a>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<nav class="pagination is-rounded" role="navigation" aria-label="pagination">
+  {
+    page.currentPage > 1 && (
+      <a href={Astro.url.pathname.replace(/\/\d+$/, `/${page.currentPage - 1}`)} class="pagination-previous">
+        Previous
+      </a>
+    )
+  }
+  {
+    page.currentPage < page.lastPage && (
+      <a href={Astro.url.pathname.replace(/\/\d+$/, `/${page.currentPage + 1}`)} class="pagination-next">
+        Next page
+      </a>
+    )
+  }
+  <ul class="pagination-list">
+    {
+      Array.from({ length: page.lastPage }, (_, i) => (
+        <li>
+          <a
+            href={Astro.url.pathname.replace(/\/\d+$/, `/${i + 1}`)}
+            class={`pagination-link ${page.currentPage === i + 1 ? "is-current" : ""}`}
+            aria-label={`Goto page ${i + 1}`}
+            aria-current={page.currentPage === i + 1 ? "page" : undefined}
+          >
+            {i + 1}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

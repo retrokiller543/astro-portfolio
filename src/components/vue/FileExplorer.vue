@@ -49,14 +49,8 @@ export default {
             default: ''
         }
     },
-    unmounted() {
-        console.log('Unmounted');
-    },
-
-    mounted() {
-        console.log('Mounted');
-    },
-    setup(props) {
+    emits: ['navigate', 'filesFetched', 'fileSelected', 'error'],
+    setup(props, { emit }) {
         const files = ref([]);
         const loading = ref(true);
         const selectedFileContent = ref('');
@@ -67,11 +61,11 @@ export default {
 
         const parentPath = computed(() => {
             const parts = currentPath.value.split('/').filter(Boolean);
-            parts.pop();  // Remove the last part to get the parent directory
+            parts.pop();
             return parts.join('/');
         });
 
-        const fetchFiles = async (path) => {
+        const fetchFiles = async (path: string) => {
             loading.value = true;
             selectedFileContent.value = '';
             selectedFileName.value = '';
@@ -94,9 +88,11 @@ export default {
                     return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
                 });
 
-                // check for readme file
-                const readmeFile = files.value.find(file => file.name === 'README.md');
+                // Emit the filesFetched event after files are successfully fetched
+                emit('filesFetched', files.value);
 
+                // Check for README file
+                const readmeFile = files.value.find(file => file.name === 'README.md');
                 if (readmeFile) {
                     fetchFileContent(readmeFile.path);
                 }
@@ -104,22 +100,23 @@ export default {
                 updateBreadcrumbs(path);
             } catch (error) {
                 console.error('Error fetching files:', error);
+                emit('error', error); // Emit an error event if file fetching fails
             } finally {
                 //loading.value = false;
             }
         };
 
-        const updateBreadcrumbs = (path) => {
+        const updateBreadcrumbs = (path: string) => {
             const parts = path.split('/').filter(Boolean);
             breadcrumbs.value = [{ name: props.repo, path: '' }];
             let currentPath = '';
-            parts.forEach(part => {
+            parts.forEach((part: any) => {
                 currentPath += `${part}/`;
                 breadcrumbs.value.push({ name: part, path: currentPath.slice(0, -1) });
             });
         };
 
-        const handleClick = (file) => {
+        const handleClick = (file: { type: string; path: any; }) => {
             if (file.type === 'dir') {
                 navigateTo(file.path);
             } else {
@@ -127,21 +124,26 @@ export default {
             }
         };
 
-        const fetchFileContent = async (filePath) => {
+        const fetchFileContent = async (filePath: string) => {
             try {
                 const response = await fetch(`https://api.github.com/repos/${props.owner}/${props.repo}/contents/${filePath}`);
                 const file = await response.json();
                 selectedFileContent.value = atob(file.content);
                 selectedFileName.value = file.name;
                 isMarkdownFile.value = filePath.toLowerCase().endsWith('.md');
+
+                // Emit the fileSelected event after a file is selected
+                emit('fileSelected', { name: file.name, content: selectedFileContent.value });
             } catch (error) {
                 console.error('Error fetching file content:', error);
+                emit('error', error); // Emit an error event if file content fetching fails
             }
         };
 
-        const navigateTo = (path) => {
+        const navigateTo = (path: string) => {
             currentPath.value = path;
             fetchFiles(path);
+            emit('navigate', path); // Emit the navigate event when navigating to a different directory
         };
 
         const parsedMarkdown = computed(() => {

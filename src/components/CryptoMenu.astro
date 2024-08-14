@@ -20,41 +20,42 @@ const { sections } = Astro.props;
 ---
 
 <div class="crypto-menu" transition:name="sidebar">
-  <aside id="crypto-menu" class="menu">
-    <button id="menu-toggle-button" class="menu-toggle-button">Open</button>
-    <ul class="menu-list home-link">
-      <li><a href="/cryptography">Home</a></li>
-    </ul>
-    {
-      sections.map((section) => (
-        <div>
-          <p class="menu-label">{section.name}</p>
-          <ul class="menu-list">
-            {section.children &&
-              section.children.map((item) => (
-                <li>
-                  <a href={item.path}>{item.name}</a>
-                  {item.children && (
-                    <ul>
-                      {item.children.map((subItem) => (
-                        <li>
-                          <a href={subItem.path}>{subItem.name}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-          </ul>
-        </div>
-      ))
-    }
+  <aside id="crypto-menu" class="menu is-open">
+    <button id="menu-toggle-button" class="menu-toggle-button is-open">Clost</button>
+    <div class="menu-content">
+      <ul class="menu-list home-link">
+        <li><a href="/cryptography">Home</a></li>
+      </ul>
+      {
+        sections.map((section) => (
+          <div>
+            <p class="menu-label">{section.name}</p>
+            <ul class="menu-list">
+              {section.children &&
+                section.children.map((item) => (
+                  <li>
+                    <a href={item.path}>{item.name}</a>
+                    {item.children && (
+                      <ul>
+                        {item.children.map((subItem) => (
+                          <li>
+                            <a href={subItem.path}>{subItem.name}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
   </aside>
   <script is:inline data-astro-rerun lang="ts">
-    // Initialize the menu when the document is loaded
-    window.addEventListener("DOMContentLoaded", () => {
-      const menuId = "crypto-menu"; // Unique ID to reference the menu
-      const buttonId = "menu-toggle-button"; // Unique ID for the toggle button
+    document.addEventListener("astro:page-load", () => {
+      const menuId = "crypto-menu";
+      const buttonId = "menu-toggle-button";
 
       function initMenu() {
         const menu = document.getElementById(menuId);
@@ -62,21 +63,22 @@ const { sections } = Astro.props;
 
         if (!menu || !button) return;
 
-        let isMenuOpen = false;
+        let isMenuOpen = true;
 
         // Retrieve menu state from localStorage
         const savedState = localStorage.getItem("isMenuOpen");
         if (savedState !== null) {
           isMenuOpen = JSON.parse(savedState);
-          updateMenuState(isMenuOpen, menu, button);
         }
 
-        // Toggle menu and save state
+        // Update the menu state without triggering transition
+        updateMenuState(isMenuOpen, menu, button, false);
+
+        // Add event listener for the toggle button
         button.addEventListener("click", () => {
-          console.log(isMenuOpen);
           isMenuOpen = !isMenuOpen;
           localStorage.setItem("isMenuOpen", isMenuOpen.toString());
-          updateMenuState(isMenuOpen, menu, button);
+          updateMenuState(isMenuOpen, menu, button, true);
         });
 
         // Set active state for links
@@ -88,7 +90,13 @@ const { sections } = Astro.props;
         });
       }
 
-      function updateMenuState(isOpen, menu, button) {
+      function updateMenuState(isOpen, menu, button, applyTransition) {
+        if (applyTransition) {
+          menu.style.transition = "transform 0.3s ease-in-out";
+        } else {
+          menu.style.transition = "transform 0.3s ease-in-out";
+        }
+
         if (isOpen) {
           menu.classList.add("is-open");
           button.classList.add("is-open");
@@ -98,8 +106,14 @@ const { sections } = Astro.props;
           button.classList.remove("is-open");
           button.textContent = "Open";
         }
+
+        // Force reflow to apply the transition after initial load
+        if (!applyTransition) {
+          menu.offsetHeight; // This line is to force a reflow and apply the transition afterwards
+          menu.style.transition = "transform 0.3s ease-in-out";
+        }
       }
-      console.log("loaded");
+
       initMenu();
     });
   </script>
@@ -107,10 +121,11 @@ const { sections } = Astro.props;
 
 <style lang="scss">
   // Variable Definitions
-  $menu-pos-top: 4rem;
+  $menu-pos-top: 3.5rem;
   $menu-parent-pos-top: 10%;
-  $button-pos-top: -1.5rem;
-  $button-pos-left: 15rem;
+  $button-pos-top: 6rem;
+  $button-pos-left-close: 16rem;
+  $button-pos-left-open: 16rem;
   $z-index: 38;
   $menu-width: 15rem;
   $menu-width-mobile: 100%;
@@ -138,7 +153,6 @@ const { sections } = Astro.props;
     position: sticky;
     top: $menu-parent-pos-top;
     height: 100vh;
-    overflow-y: auto;
 
     .menu {
       background-color: $menu-bg-color;
@@ -150,6 +164,16 @@ const { sections } = Astro.props;
       position: fixed;
       top: $menu-pos-top;
       left: 0;
+      display: flex;
+      flex-direction: column;
+
+      .menu-content {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding-left: $padding-left;
+        padding-right: $padding-right;
+        padding-bottom: 5rem;
+      }
 
       .home-link {
         padding-top: 1em;
@@ -169,7 +193,7 @@ const { sections } = Astro.props;
       .menu-toggle-button {
         position: absolute;
         top: $button-pos-top;
-        left: $button-pos-left;
+        left: $button-pos-left-close;
         width: $button-width;
         height: $button-height;
         background-color: $button-bg-color;
@@ -180,6 +204,7 @@ const { sections } = Astro.props;
         align-items: center;
         justify-content: center;
         transition: all 0.3s ease-in-out;
+        z-index: $menu-z-index + 1; // Ensure it stays above the menu
 
         &:focus {
           outline: none;
@@ -194,7 +219,7 @@ const { sections } = Astro.props;
         }
 
         &.is-open {
-          left: calc($button-pos-left - 4rem);
+          left: $button-pos-left-open;
 
           @media screen and (max-width: 768px) {
             right: -35rem;
@@ -215,9 +240,6 @@ const { sections } = Astro.props;
       }
 
       .menu-list {
-        padding-left: $padding-left;
-        padding-right: $padding-right;
-
         li {
           margin-bottom: $link-margin-bottom;
 

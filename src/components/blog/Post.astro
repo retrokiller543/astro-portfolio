@@ -1,0 +1,106 @@
+---
+import type { BlogPost } from "@/api/BlogClient";
+
+interface Props {
+  size?: "small" | "medium" | "large";
+  showTitle?: boolean;
+  showDescription?: boolean;
+  showContent?: boolean;
+  showComments?: boolean;
+  showBanner?: boolean;
+  showLink?: boolean;
+  post: BlogPost;
+}
+
+const {
+  post,
+  size = "medium",
+  showTitle = true,
+  showDescription = true,
+  showContent = false,
+  showComments = false,
+  showBanner = true,
+  showLink = false,
+} = Astro.props;
+---
+
+<article class={`card is-${size} blog-post-card`}>
+  {
+    showBanner && (
+      <section class="card-image">
+        <figure class="image is-4by3">
+          <img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="Placeholder image" />
+        </figure>
+      </section>
+    )
+  }
+
+  <section class="card-content">
+    {
+      showTitle && (
+        <div class="media">
+          <div class="media-content">
+            <p class="title is-4">{post.title}</p>
+            {showDescription && <p class="subtitle is-6">{post.content}</p>}
+          </div>
+        </div>
+      )
+    }
+
+    <div class="content">
+      {
+        showContent && (
+          <section class="section">
+            <p>{post.content}</p>
+          </section>
+        )
+      }
+
+      {
+        showLink && (
+          <a href={`/blog/posts/${post.id!.id.String}`} class="button is-primary">
+            Read more
+          </a>
+        )
+      }
+    </div>
+
+    <!-- comments will go here later -->
+  </section>
+</article>
+
+<style lang="scss">
+  .card {
+    overflow: hidden;
+
+    &.is-small {
+      max-width: 300px;
+    }
+
+    &.is-medium {
+      max-width: 500px;
+    }
+
+    &.is-large {
+      max-width: 800px;
+    }
+
+    .card-image {
+      overflow: hidden;
+    }
+
+    .card-content {
+      padding: 1rem;
+
+      .title {
+        margin-bottom: 0.5rem;
+      }
+
+      .content {
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+</style>

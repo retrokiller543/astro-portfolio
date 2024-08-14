@@ -1,5 +1,5 @@
-import { fileURLToPath, URL } from 'node:url';
-import { defineConfig, envField } from 'astro/config';
+import { fileURLToPath, URL } from "node:url";
+import { defineConfig, envField } from "astro/config";
 import wasm from "vite-plugin-wasm";
 import topLevelAwait from "vite-plugin-top-level-await";
 import icon from "astro-icon";
@@ -14,36 +14,47 @@ export default defineConfig({
   //base: import.meta.env.PROD ? 'https://astro-portfolio-nine-puce.vercel.app/' : '/',
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: 'viewport'
+    defaultStrategy: "viewport",
   },
-  output: 'hybrid',
+  output: "hybrid",
   experimental: {
     serverIslands: true,
     env: {
       schema: {
         API_BASE_URL: envField.string({
-          context: 'client',
-          access: 'public',
-          default: 'http://localhost:6968'
-        })
-      }
-    }
-  },
-  site: 'https://shielded-rust-web.netlify.app',
-  integrations: [wasm(), icon(), vue({
-    appEntrypoint: '/src/_app',
-    compilerOptions: {
-      isCustomElement: tag => tag.startsWith('Ion-')
+          context: "client",
+          access: "public",
+          default: "http://localhost:6968",
+        }),
+        BLOG_API_BASE_URL: envField.string({
+          context: "client",
+          access: "public",
+          default: "http://localhost:7856",
+        }),
+      },
     },
-    devtools: false
-  }), sitemap(), react()],
+  },
+  site: "https://shielded-rust-web.netlify.app",
+  integrations: [
+    wasm(),
+    icon(),
+    vue({
+      appEntrypoint: "/src/_app",
+      compilerOptions: {
+        isCustomElement: (tag) => tag.startsWith("Ion-"),
+      },
+      devtools: false,
+    }),
+    sitemap(),
+    react(),
+  ],
   vite: {
     plugins: [wasm(), topLevelAwait()],
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
-      }
-    }
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+      },
+    },
   },
-  adapter: vercel()
+  adapter: vercel(),
 });

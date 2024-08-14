@@ -1,0 +1,42 @@
+---
+export const prerender = false;
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import BlogClient from "@api/BlogClient";
+import Post from "@components/blog/Post.astro";
+
+const client = new BlogClient();
+
+/* client.createPost({
+  title: "Hello, World!",
+  content: "This is my first post.",
+}); */
+
+const posts = await client.getPosts();
+
+if (posts === null) {
+  return new Response("Error fetching posts", {
+    status: 500,
+    statusText: "An error occurred while fetching the posts. Please try again later.",
+  });
+}
+
+// take the first 10 posts
+const firstTenPosts = posts.slice(0, 10);
+---
+
+<BlogLayout page="Home">
+  <div class="container is-fluid">
+    <h1 class="title has-text-centered">Blog</h1>
+    <main class="section">
+      <div class="columns is-multiline">
+        {
+          firstTenPosts.map((post) => (
+            <div class="column is-one-third">
+              <Post post={post} showLink />
+            </div>
+          ))
+        }
+      </div>
+    </main>
+  </div>
+</BlogLayout>
