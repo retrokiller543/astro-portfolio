@@ -1,0 +1,33 @@
+---
+import BlogApiClient from "@/api/BlogClient";
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import Post from "@components/blog/Post.astro";
+
+const client = new BlogApiClient();
+
+const posts = await client.getPosts();
+
+if (posts === null) {
+  return new Response("Error fetching posts", {
+    status: 500,
+    statusText: "An error occurred while fetching the posts. Please try again later.",
+  });
+}
+---
+
+<BlogLayout page="Blog">
+  <div class="container is-fluid">
+    <h1 class="title has-text-centered">Blog</h1>
+    <main class="section">
+      <div class="columns is-multiline">
+        {
+          posts.map((post) => (
+            <div class="column is-one-third">
+              <Post post={post} />
+            </div>
+          ))
+        }
+      </div>
+    </main>
+  </div>
+</BlogLayout>

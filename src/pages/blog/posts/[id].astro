@@ -36,5 +36,15 @@ if (errorMessage) {
 ---
 
 <BlogLayout page={post!.title}>
-  <Post post={post!} size="large" showComments showContent />
+  <article class="centered">
+    <Post post={post!} size="large" showComments showContent />
+  </article>
 </BlogLayout>
+
+<style lang="scss">
+  .centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
