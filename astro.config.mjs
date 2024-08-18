@@ -60,9 +60,17 @@ export default defineConfig({
     imageService: true,
     devImageService: "squoosh",
     imagesConfig: {
-      sizes: [320, 640, 1280],
+      sizes: [320, 640, 750, 828, 1080, 1200],
       dangerouslyAllowSVG: true,
       formats: ["image/avif", "image/webp", "image/jpeg", "image/png"],
+      domains: ["https://bulma.io"],
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "^bulma\\.io$",
+          pathname: "**",
+        },
+      ],
     },
   }),
 });
