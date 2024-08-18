@@ -8,9 +8,6 @@ import sitemap from "@astrojs/sitemap";
 import vercel from "@astrojs/vercel/serverless";
 import react from "@astrojs/react";
 
-import sentry from "@sentry/astro";
-import spotlightjs from "@spotlightjs/astro";
-
 // https://astro.build/config
 export default defineConfig({
   //base: import.meta.env.PROD ? "https://astro-portfolio-nine-puce.vercel.app" : "http://localhost:4321",
@@ -49,8 +46,6 @@ export default defineConfig({
     }),
     sitemap(),
     react(),
-    sentry(),
-    spotlightjs(),
   ],
   vite: {
     plugins: [wasm(), topLevelAwait()],
@@ -60,5 +55,7 @@ export default defineConfig({
       },
     },
   },
-  adapter: vercel(),
+  adapter: vercel({
+    imageService: true,
+  }),
 });

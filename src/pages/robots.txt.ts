@@ -8,8 +8,6 @@ Sitemap: ${sitemapURL.href}
 `;
 
 export const GET: APIRoute = ({ site }) => {
-  console.log(site);
-
   const sitemapURL = new URL("sitemap-index.xml", site);
   return new Response(getRobotsTxt(sitemapURL));
 };
