@@ -58,5 +58,11 @@ export default defineConfig({
   },
   adapter: vercel({
     imageService: true,
+    devImageService: "squoosh",
+    imagesConfig: {
+      sizes: [320, 640, 1280],
+      dangerouslyAllowSVG: true,
+      formats: ["image/avif", "image/webp", "image/jpeg", "image/png"],
+    },
   }),
 });
