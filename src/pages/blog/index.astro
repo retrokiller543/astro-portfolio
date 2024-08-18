@@ -1,7 +1,7 @@
 ---
-export const prerender = true;
+export const prerender = false;
 import BlogLayout from "@/layouts/BlogLayout.astro";
-import BlogClient from "@api/BlogClient";
+import BlogClient, { type BlogPost } from "@api/BlogClient";
 import Post from "@components/blog/Post.astro";
 
 const client = new BlogClient();
@@ -11,8 +11,15 @@ const client = new BlogClient();
   content: "This is my first post.",
 }); */
 
-const posts = await client.getPosts();
+let posts: BlogPost[] | null = null;
 
+try {
+  
+  posts = await client.getPosts();
+
+} catch (error) {
+  
+}
 /* if (posts === null) {
   return new Response("Error fetching posts", {
     status: 500,
@@ -29,7 +36,7 @@ const postsExists = posts !== null;
     <main class="section">
       <div class="columns is-multiline">
         { postsExists &&
-          posts.slice(0, 10).map((post) => (
+          posts!.slice(0, 10).map((post) => (
             <div class="column is-one-third">
               <Post post={post} showLink />
             </div>
