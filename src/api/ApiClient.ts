@@ -16,7 +16,6 @@ export default class ApiClient {
     });
 
     this.baseURL = baseURL;
-    console.log(this.baseURL);
   }
 
   public static createInstance(baseURL: string): ApiClient {
