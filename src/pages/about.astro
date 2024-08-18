@@ -1,4 +1,5 @@
 ---
+export const prerender = false;
 import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
 
@@ -15,9 +16,13 @@ import profilePicture from "@assets/images/me.jpg";
       <!-- Profile Image -->
       <div class="columns is-centered">
         <div class="column is-one-third has-text-centered">
-          <figure class="image is-128x128 is-inline-block">
-            <Image class="is-rounded" src={profilePicture} alt="Profile Picture" quality={"low"} />
-          </figure>
+          {
+            profilePicture && (
+              <figure class="image is-128x128 is-inline-block">
+                <Image class="is-rounded" src={profilePicture} alt="Profile Picture" quality={"low"} />
+              </figure>
+            )
+          }
         </div>
       </div>
 

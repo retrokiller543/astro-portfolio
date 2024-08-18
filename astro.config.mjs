@@ -16,7 +16,7 @@ export default defineConfig({
   //base: import.meta.env.PROD ? "https://astro-portfolio-nine-puce.vercel.app" : "http://localhost:4321",
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: "viewport"
+    defaultStrategy: "viewport",
   },
   output: "hybrid",
   experimental: {
@@ -26,31 +26,39 @@ export default defineConfig({
         API_BASE_URL: envField.string({
           context: "client",
           access: "public",
-          default: "http://localhost:6968"
+          default: "http://localhost:6968",
         }),
         BLOG_API_BASE_URL: envField.string({
           context: "client",
           access: "public",
-          default: "http://localhost:7856"
-        })
-      }
-    }
+          default: "http://localhost:7856",
+        }),
+      },
+    },
   },
   site: import.meta.env.PROD ? "https://astro-portfolio-nine-puce.vercel.app" : "http://localhost:4321",
-  integrations: [wasm(), icon(), vue({
-    appEntrypoint: "/src/_app",
-    compilerOptions: {
-      isCustomElement: tag => tag.startsWith("Ion-")
-    },
-    devtools: false
-  }), sitemap(), react(), sentry(), spotlightjs()],
+  integrations: [
+    wasm(),
+    icon(),
+    vue({
+      appEntrypoint: "/src/_app",
+      compilerOptions: {
+        isCustomElement: (tag) => tag.startsWith("Ion-"),
+      },
+      devtools: false,
+    }),
+    sitemap(),
+    react(),
+    sentry(),
+    spotlightjs(),
+  ],
   vite: {
     plugins: [wasm(), topLevelAwait()],
     resolve: {
       alias: {
-        "@": fileURLToPath(new URL("./src", import.meta.url))
-      }
-    }
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+      },
+    },
   },
-  adapter: vercel()
+  adapter: vercel(),
 });

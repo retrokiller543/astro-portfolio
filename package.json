@@ -29,6 +29,7 @@
     "@vercel/speed-insights": "^1.0.12",
     "astro": "^4.13.2",
     "astro-icon": "^1.1.0",
+    "astro-loading-indicator": "^0.5.0",
     "astrocors": "^0.1.4",
     "axios": "^1.7.3",
     "bulma": "^1.0.2",
