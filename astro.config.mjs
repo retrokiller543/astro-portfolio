@@ -33,8 +33,8 @@ export default defineConfig({
       },
     },
   },
-  //site: import.meta.env.PROD ? "https://astro-portfolio-nine-puce.vercel.app" : "http://localhost:4321",
-  site: "https://shielded-rust-web.netlify.app",
+  site: import.meta.env.PROD ? "https://astro-portfolio-nine-puce.vercel.app" : "http://localhost:4321",
+  //site: "https://shielded-rust-web.netlify.app",
   integrations: [
     wasm(),
     icon(),
@@ -58,7 +58,7 @@ export default defineConfig({
   },
   adapter: vercel({
     imageService: true,
-    devImageService: "squoosh",
+    devImageService: "sharp",
     imagesConfig: {
       sizes: [320, 640, 750, 828, 1080, 1200],
       dangerouslyAllowSVG: true,

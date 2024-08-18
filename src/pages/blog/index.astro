@@ -13,15 +13,14 @@ const client = new BlogClient();
 
 const posts = await client.getPosts();
 
-if (posts === null) {
+/* if (posts === null) {
   return new Response("Error fetching posts", {
     status: 500,
     statusText: "An error occurred while fetching the posts. Please try again later.",
   });
-}
+} */
 
-// take the first 10 posts
-const firstTenPosts = posts.slice(0, 10);
+const postsExists = posts !== null;
 ---
 
 <BlogLayout page="Home">
@@ -29,8 +28,8 @@ const firstTenPosts = posts.slice(0, 10);
     <h1 class="title has-text-centered">Blog</h1>
     <main class="section">
       <div class="columns is-multiline">
-        {
-          firstTenPosts.map((post) => (
+        { postsExists &&
+          posts.slice(0, 10).map((post) => (
             <div class="column is-one-third">
               <Post server:defer post={post} showLink />
             </div>
