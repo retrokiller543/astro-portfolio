@@ -1,19 +1,22 @@
 ---
+import { Image } from "astro:assets";
+
 interface Props {
   title: string;
   description: string;
   imageUrl: string;
+  image: ImageMetadata;
   projectUrl: string;
 }
 
-const { title, description, imageUrl, projectUrl } = Astro.props;
+const { title, description, imageUrl, image, projectUrl } = Astro.props;
 ---
 
 <div class="column is-one-third">
   <div class="card">
     <div class="card-image">
       <figure class="image is-4by3">
-        <img src={imageUrl} alt={title} />
+        <Image src={image} alt={title} quality={"low"} />
       </figure>
     </div>
     <div class="card-content">

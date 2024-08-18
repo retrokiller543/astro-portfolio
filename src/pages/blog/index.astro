@@ -32,7 +32,7 @@ const firstTenPosts = posts.slice(0, 10);
         {
           firstTenPosts.map((post) => (
             <div class="column is-one-third">
-              <Post post={post} showLink />
+              <Post server:defer post={post} showLink />
             </div>
           ))
         }

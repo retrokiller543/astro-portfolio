@@ -2,10 +2,21 @@ import { BLOG_API_BASE_URL } from "astro:env/client";
 import ApiClient from "./ApiClient";
 import type { AxiosError } from "axios";
 
-export interface BlogPost {
-  id?: Record;
-  title: string;
-  content: string;
+export interface GetUserBY {
+  email?: string;
+  username?: string;
+  token?: string;
+}
+
+export interface UserInfo {
+  email: string;
+  url_safe_username: string;
+  username: string;
+  first_name: string;
+  last_name: string;
+  created_at: Date;
+  last_login: Date | null;
+  picture: string | null;
 }
 
 export interface Record {
@@ -22,55 +33,33 @@ export interface ID {
   String: string;
 }
 
-export default class BlogApiClient extends ApiClient {
-  private postsBaseUrl = "/blog/posts/";
+export default class AuthApiClient extends ApiClient {
   constructor() {
     super(BLOG_API_BASE_URL);
   }
 
-  public async createPost(post: BlogPost): Promise<Record | null> {
-    try {
-      const response = await this.post<Record>(this.postsBaseUrl, post);
-      return response.data;
-    } catch (error) {
-      this.handleError(error);
+  public async getUserInfo(data: GetUserBY): Promise<UserInfo | null> {
+    let endpoint = `${this.baseURL}/user/by?`;
+
+    if (!data.email && !data.token && !data.username) {
+      console.error("No email or token provided.");
       return null;
     }
-  }
 
-  public async getPosts(): Promise<BlogPost[] | null> {
-    try {
-      const response = await this.get<BlogPost[]>(this.postsBaseUrl);
-      return response.data;
-    } catch (error) {
-      this.handleError(error);
-      return null;
+    if (data.email) {
+      endpoint += `email=${data.email}`;
     }
-  }
 
-  public async getPostById(id: string): Promise<BlogPost | null> {
-    try {
-      const response = await this.get<BlogPost>(`${this.postsBaseUrl}${id}`);
-      return response.data;
-    } catch (error) {
-      this.handleError(error);
-      return null;
+    if (data.username) {
+      endpoint += `username=${data.username}`;
     }
-  }
 
-  public async updatePost(id: string, post: BlogPost): Promise<Record | null> {
-    try {
-      const response = await this.put<Record>(`${this.postsBaseUrl}${id}`, post);
-      return response.data;
-    } catch (error) {
-      this.handleError(error);
-      return null;
+    if (data.token) {
+      endpoint += `token=${data.token}`;
     }
-  }
 
-  public async deletePost(id: string): Promise<Record | null> {
     try {
-      const response = await this.delete<Record | null>(`${this.postsBaseUrl}${id}`);
+      const response = await this.get<UserInfo>(endpoint);
       return response.data;
     } catch (error) {
       this.handleError(error);

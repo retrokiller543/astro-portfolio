@@ -1,10 +1,11 @@
 ---
-import ProjectCard from './ProjectCard.astro';
+import ProjectCard from "./ProjectCard.astro";
 
 interface Project {
   title: string;
   description: string;
   imageUrl: string;
+  image: ImageMetadata;
   projectUrl: string;
 }
 
@@ -19,9 +20,7 @@ const { projects } = Astro.props;
   <div class="container">
     <h2 class="title">My Projects</h2>
     <div class="columns is-multiline">
-      {projects.map((project) => (
-        <ProjectCard {...project} />
-      ))}
+      {projects.map((project) => <ProjectCard {...project} />)}
     </div>
   </div>
 </section>

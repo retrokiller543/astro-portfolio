@@ -1,80 +1,85 @@
 ---
-import Layout from '@layouts/Layout.astro';
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+
+import profilePicture from "@assets/images/me.jpg";
 ---
 
 <Layout title="About">
-    <section class="section">
-        <div class="container">
-          <!-- Title -->
-          <h1 class="title">About Me</h1>
-          <h2 class="subtitle">Get to know me a little better</h2>
-          
-          <!-- Profile Image -->
-          <div class="columns is-centered">
-            <div class="column is-one-third has-text-centered">
-              <figure class="image is-128x128 is-inline-block">
-                <img class="is-rounded" src="/images/me.jpg" alt="Profile Picture">
-              </figure>
-            </div>
-          </div>
-          
-          <!-- Introduction -->
-          <div class="content">
-            <p>
-              Hello! I'm Emil Schütt, a passionate student in Cybersecurity with a strong background in programming and a deep interest in data security.
-              I am currently pursuing my Master of Science in Engineering with a specialization in Computer Security at Blekinge Institute of Technology.
-              In my free time, I love working on projects that involve programming, networking technologies, and experimenting with different frameworks.
-            </p>
-          </div>
-          
-          <!-- Skills Section -->
-          <h3 class="title is-4">Skills</h3>
-          <div class="columns">
-            <div class="column">
-              <ul>
-                <li><strong>Programming Languages:</strong> Rust, C++, Python, C#, Java</li>
-                <li><strong>Tools & Technologies:</strong> Docker, Git, ASP.Net, React</li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul>
-                <li><strong>Operating Systems:</strong> Ubuntu, Fedora, Windows</li>
-                <li><strong>Other Skills:</strong> Networking, Cryptography, Technical Troubleshooting</li>
-              </ul>
-            </div>
-          </div>
-          
-          <!-- Experience Section -->
-          <h3 class="title is-4">Experience</h3>
-          <div class="content">
-            <p>
-              I have worked on various projects ranging from network security tools to web development using frameworks like React and ASP.Net.
-              I’ve also been involved in teaching programming and technical troubleshooting, helping others to understand and resolve complex technical issues.
-              My latest focus is on Rust development, where I’ve been working on projects like RTMP protocol implementation and cryptographic libraries.
-            </p>
-          </div>
-          
-          <!-- Contact Section -->
-          <h3 class="title is-4">Contact</h3>
-          <div class="content">
-            <p>
-              Feel free to check out my work on 
-              <a href="https://github.com/retrokiller543" target="_blank">GitHub</a> and 
-              <a href="https://gitlab.com/retrokiller543" target="_blank">GitLab</a>. 
-              You can also reach out to me via email, LinkedIn, or GitLab. 
-              I'm always open to discussing new opportunities, collaborations, or just having a chat about technology, programming, and cybersecurity.
-            </p>
-          </div>
+  <section class="section">
+    <div class="container">
+      <!-- Title -->
+      <h1 class="title">About Me</h1>
+      <h2 class="subtitle">Get to know me a little better</h2>
+
+      <!-- Profile Image -->
+      <div class="columns is-centered">
+        <div class="column is-one-third has-text-centered">
+          <figure class="image is-128x128 is-inline-block">
+            <Image class="is-rounded" src={profilePicture} alt="Profile Picture" quality={"low"} />
+          </figure>
         </div>
-      </section>
+      </div>
+
+      <!-- Introduction -->
+      <div class="content">
+        <p>
+          Hello! I'm Emil Schütt, a passionate student in Cybersecurity with a strong background in programming and a
+          deep interest in data security. I am currently pursuing my Master of Science in Engineering with a
+          specialization in Computer Security at Blekinge Institute of Technology. In my free time, I love working on
+          projects that involve programming, networking technologies, and experimenting with different frameworks.
+        </p>
+      </div>
+
+      <!-- Skills Section -->
+      <h3 class="title is-4">Skills</h3>
+      <div class="columns">
+        <div class="column">
+          <ul>
+            <li><strong>Programming Languages:</strong> Rust, C++, Python, C#, Java</li>
+            <li><strong>Tools & Technologies:</strong> Docker, Git, ASP.Net, React</li>
+          </ul>
+        </div>
+        <div class="column">
+          <ul>
+            <li><strong>Operating Systems:</strong> Ubuntu, Fedora, Windows</li>
+            <li><strong>Other Skills:</strong> Networking, Cryptography, Technical Troubleshooting</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Experience Section -->
+      <h3 class="title is-4">Experience</h3>
+      <div class="content">
+        <p>
+          I have worked on various projects ranging from network security tools to web development using frameworks like
+          React and ASP.Net. I’ve also been involved in teaching programming and technical troubleshooting, helping
+          others to understand and resolve complex technical issues. My latest focus is on Rust development, where I’ve
+          been working on projects like RTMP protocol implementation and cryptographic libraries.
+        </p>
+      </div>
+
+      <!-- Contact Section -->
+      <h3 class="title is-4">Contact</h3>
+      <div class="content">
+        <p>
+          Feel free to check out my work on
+          <a href="https://github.com/retrokiller543" target="_blank">GitHub</a> and
+          <a href="https://gitlab.com/retrokiller543" target="_blank">GitLab</a>. You can also reach out to me via
+          email, LinkedIn, or GitLab. I'm always open to discussing new opportunities, collaborations, or just having a
+          chat about technology, programming, and cybersecurity.
+        </p>
+      </div>
+    </div>
+  </section>
 </Layout>
 
 <style lang="scss">
-    section.section {
-        margin-top: 3rem;
-    }
+  section.section {
+    margin-top: 3rem;
+  }
 
-    figure.image {
-        margin-bottom: 2rem;
-    }
+  figure.image {
+    margin-bottom: 2rem;
+  }
 </style>

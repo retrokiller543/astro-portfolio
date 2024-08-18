@@ -21,6 +21,24 @@ const { title } = Astro.props;
       <slot />
     </main>
 
+    <script>
+      import { storeAuthInfo, restoreAuthInfo } from "@stores/authStore";
+
+      function init() {
+        // on page unload put the values of the store into localstorage and on load fetch them
+        window.addEventListener("unload", function () {
+          storeAuthInfo();
+        });
+
+        window.addEventListener("DOMContentLoaded", function () {
+          restoreAuthInfo();
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        init();
+      });
+    </script>
     <SpeedInsights />
   </body>
 </html>

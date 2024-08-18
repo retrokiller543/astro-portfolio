@@ -1,0 +1,17 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LoginView from "@vue/LoginView.vue";
+---
+
+<Layout title="Login">
+  <main>
+    <h1>Login</h1>
+    <LoginView client:idle />
+  </main>
+</Layout>
+
+<style lang="scss">
+  main {
+    margin-top: 7rem;
+  }
+</style>

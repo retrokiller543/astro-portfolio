@@ -27,12 +27,12 @@ export default defineComponent({
     },
     setup(props) {
         const isMarkdownFile = computed(() => props.file.name.toLowerCase().endsWith('.md'));
-        
+
         marked.use({
             gfm: true,
-            breaks: true
+            breaks: true,
         });
-        
+
         const parsedMarkdown = computed(() => {
             if (isMarkdownFile.value) {
                 const raw = marked(props.file.content);

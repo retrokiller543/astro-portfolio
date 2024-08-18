@@ -1,0 +1,65 @@
+---
+export const prerender = false;
+import Layout from "@layouts/Layout.astro";
+
+const queryParams = Astro.url.searchParams;
+const username = queryParams.get("username");
+const token = queryParams.get("token");
+
+if (!username || !token) {
+  let res = Astro.response;
+  res.status = 400;
+  res.statusText = "Missing username or token";
+  return res;
+}
+---
+
+<Layout title="Redirecting...">
+  <main>
+    <h1>Redirecting...</h1>
+    <p>Please wait while we redirect you to your profile.</p>
+  </main>
+</Layout>
+
+<script>
+  import AuthApiClient from "@/api/AuthClient";
+  import { setIsAuthenticated, setUserInfo, setAccessToken } from "@stores/authStore";
+  import { navigate } from "astro:transitions/client";
+
+  function init() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    const username = urlParams.get("username");
+
+    if (token) {
+      setAccessToken(token);
+
+      const client = new AuthApiClient();
+      console.log("Fetching user info...");
+      client
+        .getUserInfo({ token })
+        .then((response) => {
+          console.log("Setting store values");
+          setIsAuthenticated(true);
+          setUserInfo(response);
+        })
+        .catch((error) => {
+          console.error("Error fetching user info:", error);
+        });
+
+      navigate(`/users/${username}`);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("Page loaded");
+    init();
+  });
+</script>
+
+<style>
+  main {
+    margin-top: 7rem;
+    text-align: center;
+  }
+</style>

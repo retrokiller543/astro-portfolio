@@ -35,6 +35,9 @@
       ],
       "@types": [
         "src/env.d.ts"
+      ],
+      "@stores/*": [
+        "src/stores/*"
       ]
     },
     "jsxImportSource": "react",

@@ -1,0 +1,22 @@
+---
+import Layout from "@layouts/Layout.astro";
+---
+
+<Layout title="Emil - 401">
+  <main
+    class="has-text-centered is-flex is-flex-direction-column is-justify-content-center is-align-items-center"
+    style="height: 100vh;"
+  >
+    <h1 class="title">401 - Unauthorized</h1>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const backButton = document.getElementById("backButton")! as HTMLAnchorElement;
+        backButton.addEventListener("click", function () {
+          window.history.back();
+        });
+      });
+    </script>
+
+    <a href="/" class="button is-link" id="backButton">Return to Home</a>
+  </main>
+</Layout>

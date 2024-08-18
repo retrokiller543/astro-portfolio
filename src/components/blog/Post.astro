@@ -24,10 +24,10 @@ const {
 } = Astro.props;
 ---
 
-<article class={`card is-${size} blog-post-card`}>
+<article class={`card is-${size} blog-post-card`} transition:name={`post-${post.title}`}>
   {
     showBanner && (
-      <section class="card-image">
+      <section class="card-image" transition:name={`post-image-${post.title}`}>
         <figure class="image is-4by3">
           <img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="Placeholder image" />
         </figure>
@@ -35,10 +35,10 @@ const {
     )
   }
 
-  <section class="card-content">
+  <section class="card-content" transition:name={`post-content-${post.title}`}>
     {
       showTitle && (
-        <div class="media">
+        <div class="media" transition:name={`post-title-${post.title}`}>
           <div class="media-content">
             <p class="title is-4">{post.title}</p>
             {showDescription && <p class="subtitle is-6">{post.content}</p>}
@@ -47,7 +47,7 @@ const {
       )
     }
 
-    <div class="content">
+    <div class="content" transition:name={`post-main-content-${post.title}`}>
       {
         showContent && (
           <section class="section">
@@ -58,7 +58,11 @@ const {
 
       {
         showLink && (
-          <a href={`/blog/posts/${post.id!.id.String}`} class="button is-primary">
+          <a
+            href={`/blog/posts/${post.id!.id.String}`}
+            class="button is-primary"
+            transition:name={`post-link-${post.title}`}
+          >
             Read more
           </a>
         )
