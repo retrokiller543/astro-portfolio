@@ -1,0 +1,32 @@
+---
+export const prerender = false;
+
+import BlogLayout from "@/layouts/BlogLayout.astro";
+
+export type Params = {
+    test: string;
+}
+
+// Get the `id` from the URL params
+const { test } = Astro.params;
+
+if (!test) {
+  return new Response("No test provided", {
+    status: 404,
+  });
+}
+---
+
+<BlogLayout page={test}>
+  <article class="centered">
+    <h1>{test}</h1>
+  </article>
+</BlogLayout>
+
+<style lang="scss">
+  .centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
