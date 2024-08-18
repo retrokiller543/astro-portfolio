@@ -33,7 +33,8 @@ export default defineConfig({
       },
     },
   },
-  site: import.meta.env.PROD ? "https://astro-portfolio-nine-puce.vercel.app" : "http://localhost:4321",
+  //site: import.meta.env.PROD ? "https://astro-portfolio-nine-puce.vercel.app" : "http://localhost:4321",
+  site: "https://shielded-rust-web.netlify.app",
   integrations: [
     wasm(),
     icon(),
