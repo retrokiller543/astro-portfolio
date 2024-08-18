@@ -31,7 +31,7 @@ const postsExists = posts !== null;
         { postsExists &&
           posts.slice(0, 10).map((post) => (
             <div class="column is-one-third">
-              <Post server:defer post={post} showLink />
+              <Post post={post} showLink />
             </div>
           ))
         }
