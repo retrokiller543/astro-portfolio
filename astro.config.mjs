@@ -62,7 +62,7 @@ export default defineConfig({
     imagesConfig: {
       sizes: [320, 640, 750, 828, 1080, 1200],
       dangerouslyAllowSVG: true,
-      formats: ["image/avif", "image/webp", "image/jpeg", "image/png"],
+      formats: ["image/avif", "image/webp"],
       domains: ["https://bulma.io"],
       remotePatterns: [
         {
