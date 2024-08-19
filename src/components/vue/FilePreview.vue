@@ -31,12 +31,16 @@ export default defineComponent({
         marked.use({
             gfm: true,
             breaks: true,
+            hooks: {
+                postprocess(html) {
+                    return DOMPurify.sanitize(html);
+                },
+            }
         });
 
         const parsedMarkdown = computed(() => {
             if (isMarkdownFile.value) {
-                const raw = marked(props.file.content);
-                return DOMPurify.sanitize(raw);
+                return marked(props.file.content);
             }
             return '';
         });

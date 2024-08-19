@@ -1,7 +1,7 @@
 <template>
     <div class="notifications-container">
         <div v-for="notification in notifications" :key="notification.id" class="notification is-danger is-light">
-            <p>{{ notification.message }}</p>
+            <p class="notification-body">{{ notification.message }}</p>
             <button class="delete" @click="remove(notification.id)"></button>
         </div>
     </div>
@@ -38,6 +38,11 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 25rem;
+}
+
+.notification-body {
+    max-width: 23rem;
 }
 
 .notification {

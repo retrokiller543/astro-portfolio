@@ -11,17 +11,17 @@ interface Props {
 const { title, description, image, projectUrl } = Astro.props;
 ---
 
-<div class="column is-one-third">
+<div class="column is-one-third" transition:name="project">
   <div class="card">
-    <div class="card-image">
-      <figure class="image is-4by3">
+    <div class="card-image" transition:name="project-image">
+      <figure class="image is-4by3" transition:name="project-figure">
         <Image src={image} alt={title} quality={"low"} />
       </figure>
     </div>
-    <div class="card-content">
-      <p class="title is-4">{title}</p>
-      <p class="subtitle is-6">{description}</p>
-      <a href={projectUrl} class="button is-link">View Project</a>
+    <div class="card-content" transition:name="project-content">
+      <p class="title is-4" transition:name="project-title">{title}</p>
+      <p class="subtitle is-6" transition:name="project-description">{description}</p>
+      <a href={projectUrl} class="button is-link" transition:name="project-button">View Project</a>
     </div>
   </div>
 </div>
