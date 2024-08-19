@@ -57,6 +57,7 @@ export default defineConfig({
     },
   },
   adapter: vercelServerless({
+    edgeMiddleware: true,
     imageService: true,
     devImageService: "sharp",
     imagesConfig: {
