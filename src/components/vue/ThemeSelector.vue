@@ -24,7 +24,7 @@ export default {
       localStorage.setItem('theme', theme);
     }
   },
-  mounted() {
+  beforeCreate() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     this.currentTheme = savedTheme;
     document.documentElement.setAttribute('data-theme', savedTheme);

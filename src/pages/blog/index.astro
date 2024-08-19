@@ -11,7 +11,7 @@ let posts: BlogPost[] | undefined = data;
 
 if (typeof data === "undefined" && error) {
   const errorMsg = `${error.code} ${error.message}.`;
-  console.error(errorMsg); 
+  console.error(errorMsg);
 }
 
 const postsExists = typeof posts !== "undefined";
