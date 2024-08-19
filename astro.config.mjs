@@ -17,6 +17,7 @@ export default defineConfig({
   },
   output: "hybrid",
   experimental: {
+    actions: true,
     serverIslands: true,
     env: {
       schema: {
@@ -37,6 +38,7 @@ export default defineConfig({
   //site: "https://shielded-rust-web.netlify.app",
   integrations: [
     wasm(),
+    topLevelAwait(),
     icon(),
     vue({
       appEntrypoint: "/src/_app",

@@ -1,37 +1,33 @@
 ---
-// Disable prerendering since you want to use SSR
 export const prerender = false;
 
-import BlogApiClient, { type BlogPost } from "@/api/BlogClient";
+import { type BlogPost } from "@/api/BlogClient";
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import Post from "@/components/blog/Post.astro";
+import { actions } from "astro:actions";
+
+interface Params {
+  id: string;
+}
 
 // Get the `id` from the URL params
 const { id } = Astro.params;
 
-let post: BlogPost | null = null;
-let errorMessage: string | null = null;
-
-if (!id) {
-  errorMessage = "No ID provided";
-} else {
-  try {
-    post = await new BlogApiClient().getPostById(id);
-
-    if (!post) {
-      errorMessage = "Post not found";
-    }
-  } catch (error) {
-    console.error("Error fetching post:", error);
-    errorMessage = "An error occurred while fetching the post. Please try again later.";
-  }
+if (typeof id === "undefined") {
+  return new Response("No ID provided", {
+    status: 404,
+    statusText: "Bad Request",
+  });
 }
 
-if (errorMessage) {
-  return new Response(errorMessage, {
-    status: !post ? 404 : 500,
-    statusText: errorMessage,
-  });
+
+let { data, error } = await actions.getPostById({id});
+
+let post: BlogPost | undefined = data;
+
+if (typeof data === "undefined" && error) {
+  const errorMsg = `${error.code} ${error.message}.`;
+  console.error(errorMsg); 
 }
 ---
 
