@@ -57,9 +57,9 @@ export default defineConfig({
     },
   },
   adapter: vercelServerless({
-    edgeMiddleware: true,
+    // edgeMiddleware: true,
     imageService: true,
-    devImageService: "sharp",
+    /* devImageService: "sharp",
     imagesConfig: {
       sizes: [320, 640, 750, 828, 1080, 1200],
       dangerouslyAllowSVG: true,
@@ -73,6 +73,6 @@ export default defineConfig({
         },
       ],
     },
-    functionPerRoute: false,
+    functionPerRoute: false, */
   }),
 });
