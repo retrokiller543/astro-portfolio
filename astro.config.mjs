@@ -48,14 +48,14 @@ export default defineConfig({
     sitemap(),
     react(),
   ],
-  /* vite: {
-    plugins: [wasm(), topLevelAwait()],
+  vite: {
+    //plugins: [wasm(), topLevelAwait()],
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
       },
     },
-  }, */
+  },
   adapter: vercelServerless({
     edgeMiddleware: true,
     imageService: true,

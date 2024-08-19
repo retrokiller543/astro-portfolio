@@ -14,11 +14,9 @@ const client = new BlogClient();
 let posts: BlogPost[] | null = null;
 
 try {
-  
   posts = await client.getPosts();
-
 } catch (error) {
-  
+  console.error("Error fetching posts:", error);
 }
 /* if (posts === null) {
   return new Response("Error fetching posts", {
