@@ -5,7 +5,7 @@ import topLevelAwait from "vite-plugin-top-level-await";
 import icon from "astro-icon";
 import vue from "@astrojs/vue";
 import sitemap from "@astrojs/sitemap";
-import vercel from "@astrojs/vercel/serverless";
+import vercelServerless from "@astrojs/vercel/serverless";
 import react from "@astrojs/react";
 
 // https://astro.build/config
@@ -17,6 +17,7 @@ export default defineConfig({
   },
   output: "hybrid",
   experimental: {
+    actions: true,
     serverIslands: true,
     env: {
       schema: {
@@ -37,6 +38,7 @@ export default defineConfig({
   //site: "https://shielded-rust-web.netlify.app",
   integrations: [
     wasm(),
+    topLevelAwait(),
     icon(),
     vue({
       appEntrypoint: "/src/_app",
@@ -49,14 +51,15 @@ export default defineConfig({
     react(),
   ],
   vite: {
-    plugins: [wasm(), topLevelAwait()],
+    //plugins: [wasm(), topLevelAwait()],
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
       },
     },
   },
-  adapter: vercel({
+  adapter: vercelServerless({
+    edgeMiddleware: true,
     imageService: true,
     devImageService: "sharp",
     imagesConfig: {

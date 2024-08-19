@@ -1,0 +1,71 @@
+---
+import { notificationStore } from '@stores/notifcationStore';
+---
+
+<div class="notifications-container">
+  {notificationStore.get().map((notification) => (
+    <div class="notification">
+      <p>{notification.message}</p>
+      <button id={`notification-${notification.id}`}>Close</button>
+    </div>
+  ))}
+
+  <script>
+    import { notificationStore, removeNotification } from '@stores/notifcationStore';
+
+    function init() {
+        const notificationsButtons = notificationStore.get().map((notification) => {
+            return document.getElementById(`notification-${notification.id}`);
+        });
+        notificationsButtons.forEach((notificationButton) => {
+            if (!notificationButton) return;
+
+            notificationButton.addEventListener("click", () => {
+                const id = notificationButton.id.split("-")[1];
+
+                removeNotification(id);
+            });
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        init();
+    });
+
+    document.addEventListener("astro:page-load", () => {
+        init();
+    });
+  </script>
+</div>
+
+<style>
+.notifications-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notification {
+  background-color: #f44336;
+  color: white;
+  padding: 16px;
+  border-radius: 4px;
+  animation: slide-in 0.3s ease-out;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+</style>

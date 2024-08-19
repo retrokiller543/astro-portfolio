@@ -2,7 +2,7 @@
 import Head from "@components/Head.astro";
 import GlobalStyles from "@components/GlobalStyles.astro";
 import Navbar from "@components/Navbar.astro";
-
+import Notifications from '@vue/Notifications.vue'
 // import SpeedInsights from "@vercel/speed-insights/astro";
 
 interface Props {
@@ -19,13 +19,13 @@ const { title } = Astro.props;
     <Navbar transition:persist />
     <main>
       <slot />
+      <Notifications client:idle />
     </main>
 
     <script>
       import { storeAuthInfo, restoreAuthInfo } from "@stores/authStore";
 
       function init() {
-        // on page unload put the values of the store into localstorage and on load fetch them
         window.addEventListener("unload", function () {
           storeAuthInfo();
         });

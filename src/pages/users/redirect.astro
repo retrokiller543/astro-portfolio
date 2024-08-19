@@ -24,6 +24,7 @@ if (!username || !token) {
 <script>
   import AuthApiClient from "@/api/AuthClient";
   import { setIsAuthenticated, setUserInfo, setAccessToken } from "@stores/authStore";
+  import { showNotification } from "@/stores/notifcationStore";
   import { navigate } from "astro:transitions/client";
 
   function init() {
@@ -42,6 +43,7 @@ if (!username || !token) {
           console.log("Setting store values");
           setIsAuthenticated(true);
           setUserInfo(response);
+          showNotification("Login successful!");
         })
         .catch((error) => {
           console.error("Error fetching user info:", error);

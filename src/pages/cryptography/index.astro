@@ -1,6 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import CryptoView from "@components/CryptoView.astro";
+import FileExplorer from "@components/vue/FileExplorer.vue";
 ---
 
 <Layout title="Cryptographic Library">
@@ -9,10 +10,10 @@ import CryptoView from "@components/CryptoView.astro";
       <div class="hero-body">
         <section class="section">
           <div class="container">
-            <h1 class="title">Cryptographic Library</h1>
+            <h1 class="title" transition:name="project-title">Cryptographic Library</h1>
             <p class="subtitle">A collection of cryptographic algorithms implemented in Rust.</p>
 
-            <div class="content">
+            <div class="content" transition:name="project-description">
               <p>
                 This library is designed for use in cryptography courses and includes a variety of algorithms, both
                 standard and custom. While still in an early stage, it serves as a practical resource for learning and
@@ -26,6 +27,14 @@ import CryptoView from "@components/CryptoView.astro";
                 potentially more bindings in the future.
               </p>
             </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h1 class="title">Project Code</h1>
+          <h2 class="subtitle">This is the full source code for the Cryptography Library</h2>
+          <div>
+            <FileExplorer client:visible owner="retrokiller543" repo="rustic_cryptography" />
           </div>
         </section>
       </div>
