@@ -1,0 +1,65 @@
+---
+import { getEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
+import TableOfContents from './TableOfContents.astro';
+
+import BlogPostPreview from './BlogPostPreview.astro';
+
+export interface Props {
+    post: CollectionEntry<"blog">;
+    relatedPosts: CollectionEntry<"blog">[];
+}
+
+const props = Astro.props;
+
+const { Content, headings } = await props.post.render();
+
+const author = await getEntry(props.post.data.author.collection, props.post.data.author.id);
+---
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-two-thirds">
+        <article class="card">
+          <div class="card-image">
+            <figure class="image is-16by9" transition:name={`${props.post.slug}-image`}>
+              <img src={props.post.data.image} alt={props.post.data.title} />
+            </figure>
+          </div>
+          <div class="card-content" transition:name={`${props.post.slug}-content`}>
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img class="is-rounded" src={author.data.image} alt={author.data.name} />
+                </figure>
+            </div>
+              <div class="media-content">
+                <p class="title is-4" transition:name={`${props.post.slug}-title`}>{props.post.data.title}</p>
+                <p class="subtitle is-6">{props.post.data.subtitle}</p>
+              </div>
+            </div>
+            <div class="content">
+              <TableOfContents headings={headings} />
+
+              <Content />
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    {props.relatedPosts.length > 0 && (
+      <div class="columns is-centered mt-6">
+        <div class="column is-two-thirds">
+          <h2 class="title is-4">Related Posts</h2>
+          <div class="columns is-multiline">
+            {props.relatedPosts.map((post) => (
+              <BlogPostPreview post={post} />
+            ))}
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+</section>

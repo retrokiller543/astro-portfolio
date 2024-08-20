@@ -1,0 +1,59 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
+
+export interface Props {
+    post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+
+const author = await getEntry(post.data.author);
+
+const formattedDate = new Date(post.data.createdAt).toLocaleDateString('sv-SE', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<div class="column is-one-third related-post" id={post.slug} transition:name={post.slug}>
+    <div class="card">
+        <div class="card-image">
+            <figure class="image is-4by3" transition:name={`${post.slug}-image`}>
+                <img src={post.data.image} alt={post.data.title} />
+            </figure>
+        </div>
+        <div class="card-content" transition:name={`${post.slug}-content`}>
+            <p class="title is-5" transition:name={`${post.slug}-title`}>{post.data.title}</p>
+            <p class="subtitle is-6" transition:name={`${post.slug}-author-name`}>Author: {author.data.name}. Created: {formattedDate}</p>
+        </div>
+    </div>
+</div>
+
+<script>
+  import { navigate } from 'astro:transitions/client';
+
+  document.addEventListener('astro:page-load', () => {
+    const relatedPosts = document.getElementsByClassName('related-post');
+    
+    for (let post of relatedPosts) {
+    const id = post.id;
+
+      post.addEventListener('click', () => {
+        navigate(`/blog/${id}`);
+      });
+    }
+  });
+</script>
+
+<style lang="scss">
+ .related-post {
+    // add a hover effect and scale up
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+ }
+</style>

@@ -1,0 +1,44 @@
+---
+export interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+export interface Props {
+  headings: Heading[];
+}
+
+const props = Astro.props;
+---
+
+<nav class="table-of-contents">
+  <p class="title is-4">Table of Contents</p>
+  <ul>
+    {props.headings.map((heading) => (
+      <li class={`depth-${heading.depth}`}>
+        <a href={`#${heading.slug}`}>{heading.text}</a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+.table-of-contents ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.table-of-contents li.depth-1 {
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+.table-of-contents li.depth-2 {
+  margin-left: 1em;
+}
+
+.table-of-contents li.depth-3 {
+  margin-left: 2em;
+}
+</style>

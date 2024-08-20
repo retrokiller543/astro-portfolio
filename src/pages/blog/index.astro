@@ -2,8 +2,10 @@
 export const prerender = false;
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import { type BlogPost } from "@api/BlogClient";
+import BlogPostPreview from "@components/blog/BlogPostPreview.astro";
 import Post from "@components/blog/Post.astro";
 import { actions } from "astro:actions";
+import { getCollection } from "astro:content";
 
 let { data, error } = await actions.getPosts();
 
@@ -15,6 +17,8 @@ if (typeof data === "undefined" && error) {
 }
 
 const postsExists = typeof posts !== "undefined";
+
+const collectionPosts = await getCollection("blog");
 ---
 
 <BlogLayout page="Home">
@@ -29,6 +33,10 @@ const postsExists = typeof posts !== "undefined";
             </div>
           ))
         }
+      </div>
+
+      <div class="columns is-multiline">
+        {collectionPosts.map((post) => <BlogPostPreview post={post} />)}
       </div>
     </main>
   </div>
