@@ -2,7 +2,6 @@ import { fileURLToPath, URL } from "node:url";
 import { defineConfig, envField } from "astro/config";
 import wasm from "vite-plugin-wasm";
 import topLevelAwait from "vite-plugin-top-level-await";
-import icon from "astro-icon";
 import vue from "@astrojs/vue";
 import sitemap from "@astrojs/sitemap";
 import vercelServerless from "@astrojs/vercel/serverless";
@@ -15,7 +14,7 @@ export default defineConfig({
   //base: import.meta.env.PROD ? "https://astro-portfolio-nine-puce.vercel.app" : "http://localhost:4321",
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: "viewport"
+    defaultStrategy: "viewport",
   },
   output: "hybrid",
   experimental: {
@@ -26,32 +25,39 @@ export default defineConfig({
         API_BASE_URL: envField.string({
           context: "client",
           access: "public",
-          default: "http://localhost:6968"
+          default: "http://localhost:6968",
         }),
         BLOG_API_BASE_URL: envField.string({
           context: "client",
           access: "public",
-          default: "http://localhost:7856"
-        })
-      }
-    }
+          default: "http://localhost:7856",
+        }),
+      },
+    },
   },
   site: import.meta.env.PROD ? "https://astro-portfolio-nine-puce.vercel.app" : "http://localhost:4321",
   //site: "https://shielded-rust-web.netlify.app",
-  integrations: [wasm(), topLevelAwait(), icon(), vue({
-    appEntrypoint: "/src/_app",
-    compilerOptions: {
-      isCustomElement: tag => tag.startsWith("Ion-")
-    },
-    devtools: false
-  }), sitemap(), react(), mdx()],
+  integrations: [
+    wasm(),
+    topLevelAwait(),
+    vue({
+      appEntrypoint: "/src/_app",
+      compilerOptions: {
+        isCustomElement: (tag) => tag.startsWith("Ion-"),
+      },
+      devtools: false,
+    }),
+    sitemap(),
+    react(),
+    mdx(),
+  ],
   vite: {
     //plugins: [wasm(), topLevelAwait()],
     resolve: {
       alias: {
-        "@": fileURLToPath(new URL("./src", import.meta.url))
-      }
-    }
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+      },
+    },
   },
   adapter: vercelServerless({
     edgeMiddleware: true,
@@ -62,13 +68,15 @@ export default defineConfig({
       dangerouslyAllowSVG: true,
       formats: ["image/avif", "image/webp"],
       domains: ["https://bulma.io"],
-      remotePatterns: [{
-        protocol: "https",
-        hostname: "^bulma\\.io$",
-        pathname: "**"
-      }]
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "^bulma\\.io$",
+          pathname: "**",
+        },
+      ],
     },
     functionPerRoute: false,
-    isr: true
-  })
+    isr: true,
+  }),
 });

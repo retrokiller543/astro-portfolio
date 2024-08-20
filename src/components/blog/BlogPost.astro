@@ -1,13 +1,15 @@
 ---
 import { getEntry } from 'astro:content';
-import type { CollectionEntry } from "astro:content";
-import TableOfContents from './TableOfContents.astro';
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 
+import TableOfContents from './TableOfContents.astro';
 import BlogPostPreview from './BlogPostPreview.astro';
+import { getEntries } from 'astro:content';
 
 export interface Props {
-    post: CollectionEntry<"blog">;
-    relatedPosts: CollectionEntry<"blog">[];
+  post: CollectionEntry<'blog'>;
+  relatedPosts: CollectionEntry<'blog'>[];
 }
 
 const props = Astro.props;
@@ -15,6 +17,8 @@ const props = Astro.props;
 const { Content, headings } = await props.post.render();
 
 const author = await getEntry(props.post.data.author.collection, props.post.data.author.id);
+
+const tags: CollectionEntry<'tags'>[] = await getEntries(props.post.data.tags);
 ---
 
 <section class="section">
@@ -24,19 +28,43 @@ const author = await getEntry(props.post.data.author.collection, props.post.data
         <article class="card">
           <div class="card-image">
             <figure class="image" transition:name={`${props.post.slug}-image`}>
-              <img src={props.post.data.image} alt={props.post.data.title} />
+              <Image
+                src={props.post.data.image}
+                width={1200}
+                height={800}
+                quality="high"
+                alt={props.post.data.title}
+              />
             </figure>
           </div>
           <div class="card-content" transition:name={`${props.post.slug}-content`}>
             <div class="media">
               <div class="media-left">
                 <figure class="image is-48x48">
-                  <img class="is-rounded" src={author.data.image} alt={author.data.name} />
+                  <Image
+                    class="is-rounded"
+                    width={96}
+                    height={96}
+                    quality="low"
+                    src={author.data.image}
+                    alt={author.data.name}
+                  />
                 </figure>
-            </div>
+              </div>
               <div class="media-content">
-                <p class="title is-4" transition:name={`${props.post.slug}-title`}>{props.post.data.title}</p>
+                <p class="title is-4" transition:name={`${props.post.slug}-title`}>
+                  {props.post.data.title}
+                </p>
                 <p class="subtitle is-6">{props.post.data.subtitle}</p>
+                <div class="tags">
+                  {tags.map((tag: CollectionEntry<'tags'>) => (
+                    <span
+                      class="tag"
+                      style={`background-color: ${tag.data.color?.background}; color: ${tag.data.color?.text}`}>
+                      {tag.data.icon && <span class="icon">{tag.data.icon}</span>} {tag.data.name}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
             <div class="content">
