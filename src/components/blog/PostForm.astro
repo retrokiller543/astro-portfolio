@@ -33,20 +33,15 @@ const { post } = Astro.props;
 </div>
 
 <script>
-  import BlogApiClient, { type BlogPost } from "@/api/BlogClient";
+  import { actions } from "astro:actions";
 
-  function submit(event: SubmitEvent) {
+  async function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    const titleValue = (document.getElementById("title") as HTMLInputElement).value;
-    const contentValue = (document.getElementById("content") as HTMLTextAreaElement).value;
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
 
-    const post: BlogPost = {
-      title: titleValue,
-      content: contentValue,
-    };
-
-    new BlogApiClient().createPost(post);
+    await actions.createPost(formData);
   }
 
   document.addEventListener("astro:page-load", () => {

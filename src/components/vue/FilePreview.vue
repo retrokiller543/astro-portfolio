@@ -3,7 +3,9 @@
         <div class="box file-preview" v-if="file">
             <h2 class="subtitle">{{ file.name }}</h2>
             <div v-if="isMarkdownFile" v-html="parsedMarkdown"></div>
-            <pre v-else>{{ file.content }}</pre>
+            <pre v-else>
+                <code v-html="highlightedCode"></code>
+            </pre>
         </div>
     </transition>
 </template>
@@ -11,7 +13,17 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import { marked } from 'marked';
+import prism from "prismjs";
 import DOMPurify from 'dompurify';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-c';
+import 'prismjs/components/prism-cpp';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-rust';
+import 'prismjs/components/prism-bash';
+import 'prismjs/themes/prism.css';
 
 export interface FileData {
     name: string;
@@ -31,6 +43,9 @@ export default defineComponent({
         marked.use({
             gfm: true,
             breaks: true,
+            highlight: function (code, lang) {
+                return prism.highlight(code, prism.languages[lang], lang);
+            },
             hooks: {
                 postprocess(html) {
                     return DOMPurify.sanitize(html);
@@ -45,9 +60,24 @@ export default defineComponent({
             return '';
         });
 
+        const highlightedCode = computed(() => {
+            if (!isMarkdownFile.value) {
+                // check if the file has grammer with prismjs
+                const fileExtension = props.file.name.split('.').pop()?.toLowerCase();
+                const language = fileExtension && prism.languages[fileExtension] ? fileExtension : 'none';
+                if (prism.languages[language]) {
+                    return prism.highlight(props.file.content, prism.languages[language], language);
+                } else {
+                    return props.file.content;
+                }
+            }
+            return '';
+        });
+
         return {
             isMarkdownFile,
-            parsedMarkdown
+            parsedMarkdown,
+            highlightedCode
         };
     }
 });
