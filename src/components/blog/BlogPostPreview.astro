@@ -20,7 +20,7 @@ const formattedDate = new Date(post.data.createdAt).toLocaleDateString('sv-SE', 
 <div class="column is-one-third related-post" id={post.slug} transition:name={post.slug}>
     <div class="card">
         <div class="card-image">
-            <figure class="image is-4by3" transition:name={`${post.slug}-image`}>
+            <figure class="image" transition:name={`${post.slug}-image`}>
                 <img src={post.data.image} alt={post.data.title} />
             </figure>
         </div>

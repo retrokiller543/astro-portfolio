@@ -24,11 +24,16 @@ const collectionPosts = await getCollection("blog");
 <BlogLayout page="Home">
   <div class="container is-fluid">
     <h1 class="title has-text-centered">Blog</h1>
+
+    <div class="container has-text-centered">
+      <button id="createPost" class="button is-primary">Create a post</button>
+    </div>
+
     <main class="section">
       <div class="columns is-multiline">
         { postsExists &&
           posts!.slice(0, 10).map((post) => (
-            <div class="column is-one-third">
+            <div class="column is-one-third user-post">
               <Post post={post} showLink />
             </div>
           ))
@@ -41,3 +46,29 @@ const collectionPosts = await getCollection("blog");
     </main>
   </div>
 </BlogLayout>
+
+<script>
+  import { showNotification } from "@/stores/notifcationStore";
+import { navigate } from "astro:transitions/client";
+import { accessToken } from "@/stores/authStore";
+
+  const posts = document.getElementsByClassName("user-post");
+
+  if (posts.length === 0) {
+    showNotification("No user made posts found");
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    const createPost = document.getElementById("createPost");
+
+    if (createPost) {
+      createPost.addEventListener("click", () => {
+        if (accessToken.get()) {
+          navigate("/blog/posts/create");
+        } else {
+          showNotification("You must be logged in to create a post"); 
+        }
+      });
+    }
+  });
+</script>

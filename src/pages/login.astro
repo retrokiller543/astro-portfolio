@@ -4,14 +4,8 @@ import LoginView from "@vue/LoginView.vue";
 ---
 
 <Layout title="Login">
-  <main>
-    <h1>Login</h1>
-    <LoginView client:idle />
-  </main>
+  <main class="container is-centered">
+        <h1 class="title">Login</h1>
+        <LoginView client:idle />
+    </main>
 </Layout>
-
-<style lang="scss">
-  main {
-    margin-top: 7rem;
-  }
-</style>

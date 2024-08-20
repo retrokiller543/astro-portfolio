@@ -1,0 +1,11 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import LoginView from '@components/vue/LoginView.vue';
+---
+
+<Layout title="Sign Up">
+    <div class="container is-centered">
+        <h1 class="title">Sign Up</h1>
+        <LoginView client:idle />
+    </div>
+</Layout>

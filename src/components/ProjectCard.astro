@@ -15,7 +15,7 @@ const transitionName = title.replace(/\s+/g, '-').toLowerCase();
 <div class="column is-one-third" transition:name={`project-${transitionName}`}>
   <div class="card">
     <div class="card-image" transition:name={`project-image-${transitionName}`}>
-      <figure class="image is-4by3" transition:name={`project-figure-${transitionName}`}>
+      <figure class="image" transition:name={`project-figure-${transitionName}`}>
         <Image src={image} alt={title} quality={"low"} />
       </figure>
     </div>

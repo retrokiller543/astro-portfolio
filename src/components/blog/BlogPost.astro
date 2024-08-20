@@ -23,7 +23,7 @@ const author = await getEntry(props.post.data.author.collection, props.post.data
       <div class="column is-two-thirds">
         <article class="card">
           <div class="card-image">
-            <figure class="image is-16by9" transition:name={`${props.post.slug}-image`}>
+            <figure class="image" transition:name={`${props.post.slug}-image`}>
               <img src={props.post.data.image} alt={props.post.data.title} />
             </figure>
           </div>
@@ -40,7 +40,9 @@ const author = await getEntry(props.post.data.author.collection, props.post.data
               </div>
             </div>
             <div class="content">
-              <TableOfContents headings={headings} />
+              <header class="header">
+                <TableOfContents headings={headings} />
+              </header>
 
               <Content />
             </div>
@@ -63,3 +65,14 @@ const author = await getEntry(props.post.data.author.collection, props.post.data
     )}
   </div>
 </section>
+
+<style>
+  .header {
+    border-top: 1px solid var(--bulma-card-color);
+    border-bottom: 1px solid var(--bulma-card-color);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+</style>
