@@ -2,9 +2,12 @@
   <div class="navbar-item has-dropdown is-hoverable">
     <button class="navbar-link">Themes</button>
     <div class="navbar-dropdown">
-      <a :class="{ 'is-active': currentTheme === 'light' }" class="navbar-item" @click="changeTheme('light')">Light</a>
-      <a :class="{ 'is-active': currentTheme === 'dark' }" class="navbar-item" @click="changeTheme('dark')">Dark</a>
-      <a :class="{ 'is-active': currentTheme === 'nord' }" class="navbar-item" @click="changeTheme('nord')">Nord</a>
+      <button :class="{ 'is-active': currentTheme === 'light' }" class="navbar-item"
+        @click="changeTheme('light')">Light</button>
+      <button :class="{ 'is-active': currentTheme === 'dark' }" class="navbar-item"
+        @click="changeTheme('dark')">Dark</button>
+      <button :class="{ 'is-active': currentTheme === 'nord' }" class="navbar-item"
+        @click="changeTheme('nord')">Nord</button>
     </div>
   </div>
 </template>
