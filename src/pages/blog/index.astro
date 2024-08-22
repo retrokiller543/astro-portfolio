@@ -1,24 +1,11 @@
 ---
-export const prerender = false;
+export const prerender = true;
 import BlogLayout from "@/layouts/BlogLayout.astro";
-import { type BlogPost } from "@api/BlogClient";
 import BlogPostPreview from "@components/blog/BlogPostPreview.astro";
-import Post from "@components/blog/Post.astro";
 import SearchBar from "@components/blog/SearchBar.astro";
-import { actions } from "astro:actions";
+import UserPosts from "@components/blog/UserPosts.astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
-
-let { data, error } = await actions.getPosts();
-
-let posts: BlogPost[] | undefined = data;
-
-if (typeof data === "undefined" && error) {
-  const errorMsg = `${error.code} ${error.message}`;
-  console.error(errorMsg);
-}
-
-const postsExists = typeof posts !== "undefined";
 
 const collectionPosts: CollectionEntry<"blog">[] = await getCollection("blog");
 
@@ -34,18 +21,15 @@ const filteredPosts = collectionPosts.sort((a, b) => b.data.createdAt.getTime() 
     </div>
 
     <main class="section">
-      <section class="section">
-        <div class="columns is-multiline">
-          { postsExists &&
-            posts!.slice(0, 10).map((post) => (
-              <div class="column is-one-third user-post">
-                <Post post={post} showLink />
-              </div>
-            ))
-          }
+      
+      <UserPosts server:defer >
+        <div slot="fallback">
+          <div class="spinner">
+            <div class="loader is-centered "></div>
+            <p>Loading...</p>
         </div>
-      </section>
-
+        </div>
+      </UserPosts>
 
       <section class="section">
         <SearchBar />
@@ -67,14 +51,8 @@ const filteredPosts = collectionPosts.sort((a, b) => b.data.createdAt.getTime() 
 
 <script>
   import { showNotification } from "@/stores/notifcationStore";
-import { navigate } from "astro:transitions/client";
-import { accessToken } from "@/stores/authStore";
-
-  const posts = document.getElementsByClassName("user-post");
-
-  if (posts.length === 0) {
-    showNotification("No user made posts found");
-  }
+  import { navigate } from "astro:transitions/client";
+  import { accessToken } from "@/stores/authStore";
 
   document.addEventListener("astro:page-load", () => {
     const createPost = document.getElementById("createPost");
@@ -90,3 +68,15 @@ import { accessToken } from "@/stores/authStore";
     }
   });
 </script>
+
+<style>
+  .spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40%;
+    width: 100%;
+    flex-direction: column;
+    font-size: 5rem;
+}
+</style>

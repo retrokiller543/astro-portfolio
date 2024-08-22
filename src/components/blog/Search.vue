@@ -12,7 +12,7 @@
                 <div class="control">
                     <button class="button is-primary" @click="toggleFilters">
                         <span class="icon">
-                            <i class="fas fa-filter"></i>
+                            <FilterListIcon />
                         </span>
                         <span>Filters</span>
                     </button>
@@ -96,12 +96,14 @@ import Fuse from 'fuse.js';
 import SearchIcon from '../../assets/icons/SearchIcon.vue';
 import PersonIcon from '../../assets/icons/PersonIcon.vue';
 import LableIcon from '../../assets/icons/LableIcon.vue';
+import FilterListIcon from '../../assets/icons/FilterListIcon.vue';
 
 export default defineComponent({
     components: {
         SearchIcon,
         PersonIcon,
         LableIcon,
+        FilterListIcon,
     },
     props: {
         posts: {

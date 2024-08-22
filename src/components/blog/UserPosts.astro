@@ -1,0 +1,39 @@
+---
+import type { BlogPost } from "@/api/BlogClient";
+import { actions } from "astro:actions";
+import Post from "./Post.astro";
+
+let { data, error } = await actions.getPosts();
+
+let posts: BlogPost[] | undefined = data;
+
+if (typeof data === "undefined" && error) {
+  const errorMsg = `${error.code} ${error.message}`;
+  console.error(errorMsg);
+}
+
+const postsExists = typeof posts !== "undefined";
+---
+
+<section class="section">
+    <div class="columns is-multiline">
+        { postsExists &&
+        posts!.slice(0, 10).map((post) => (
+            <div class="column is-one-third user-post">
+            <Post post={post} showLink />
+            </div>
+        ))
+        }
+    </div>
+</section>
+
+
+<script>
+    import { showNotification } from "@/stores/notifcationStore";
+    
+    const posts = document.getElementsByClassName("user-post");
+
+    if (posts.length === 0) {
+        showNotification("No user made posts found");
+    }
+</script>
