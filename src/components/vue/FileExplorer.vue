@@ -25,9 +25,14 @@ import { ref, onMounted, watch, computed } from 'vue';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
+// @ts-ignore
 import Breadcrumbs from './Breadcrumbs.vue';
+// @ts-ignore
 import FileList from './FileList.vue';
+// @ts-ignore
 import FilePreview from './FilePreview.vue';
+// @ts-ignore
+import type { FileData } from './FilePreview.vue';
 
 export default {
     components: {
@@ -75,7 +80,7 @@ export default {
                 files.value = await response.json();
 
                 // Sort files: directories first, then files by extension and alphabetically
-                files.value.sort((a, b) => {
+                files.value.sort((a: FileData, b: FileData) => {
                     if (a.type === 'dir' && b.type !== 'dir') return -1;
                     if (a.type !== 'dir' && b.type === 'dir') return 1;
                     if (a.type === 'file' && b.type === 'file') {
@@ -92,7 +97,8 @@ export default {
                 emit('filesFetched', files.value);
 
                 // Check for README file
-                const readmeFile = files.value.find(file => file.name === 'README.md');
+                // @ts-ignore
+                const readmeFile: FileData = files.value.find(file => file.name === 'README.md');
                 if (readmeFile) {
                     fetchFileContent(readmeFile.path);
                 }
@@ -209,7 +215,6 @@ export default {
 }
 
 .spinner {
-    // verticly center the content of the spinner  with the loader ontop of the text
     display: flex;
     align-items: center;
     justify-content: center;
@@ -219,7 +224,7 @@ export default {
     font-size: 5rem;
 }
 
-[data-theme="nord"] .panel-heading {
+/* [data-theme="nord"] .panel-heading {
     color: var(--bulma-text-dark);
 }
 
@@ -228,8 +233,8 @@ export default {
 }
 
 [data-them="light"] .panel-heading {
-    color: hsl(var(--bulma-panel-h), var(--bulma-panel-s), var(--bulma-panel-heading-color-l));
-}
+    color: hsl(var(--bulma-panel-h), var(--bulma-panel-s), var(--bulma-panel-heading-color-l)) !important;
+} */
 
 
 .file-preview {

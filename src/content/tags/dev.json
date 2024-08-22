@@ -1,0 +1,8 @@
+{
+    "name": "dev",
+    "description": "All Dev related content",
+    "color": {
+        "background": "#a3be8c",
+        "text": "#2e3440"
+    }
+}

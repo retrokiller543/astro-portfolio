@@ -1,0 +1,8 @@
+{
+    "name": "info",
+    "description": "All informational content",
+    "color": {
+        "background": "#8fbcbb",
+        "text": "#2e3440"
+    }
+}

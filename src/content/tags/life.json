@@ -1,0 +1,8 @@
+{
+    "name": "life",
+    "description": "Life updates, news, and more",
+    "color": {
+        "background": "#b48ead",
+        "text": "#2e3440"
+    }
+}

@@ -14,6 +14,22 @@ const blogCollection = defineCollection({
 
     author: reference("authors"),
     relatedPosts: z.array(reference("blog")).nullable(),
+    tags: z.array(reference("tags")),
+  }),
+});
+
+const tagsCollection = defineCollection({
+  type: "data",
+  schema: z.object({
+    name: z.string(),
+    description: z.string().optional(),
+    icon: z.string().optional(),
+    color: z
+      .object({
+        background: z.string(),
+        text: z.string(),
+      })
+      .optional(),
   }),
 });
 
@@ -29,4 +45,5 @@ const authorsCollection = defineCollection({
 export const collections = {
   blog: blogCollection,
   authors: authorsCollection,
+  tags: tagsCollection,
 };

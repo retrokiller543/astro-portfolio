@@ -2,11 +2,11 @@
   <div class="navbar-item has-dropdown is-hoverable">
     <button class="navbar-link">Themes</button>
     <div class="navbar-dropdown">
-      <button :class="{ 'is-active': currentTheme === 'light' }" class="navbar-item"
+      <button :class="{ 'is-active': currentTheme === 'light' }" class="navbar-item button"
         @click="changeTheme('light')">Light</button>
-      <button :class="{ 'is-active': currentTheme === 'dark' }" class="navbar-item"
+      <button :class="{ 'is-active': currentTheme === 'dark' }" class="navbar-item button"
         @click="changeTheme('dark')">Dark</button>
-      <button :class="{ 'is-active': currentTheme === 'nord' }" class="navbar-item"
+      <button :class="{ 'is-active': currentTheme === 'nord' }" class="navbar-item button"
         @click="changeTheme('nord')">Nord</button>
     </div>
   </div>
@@ -35,12 +35,14 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 [data-theme="nord"] .navbar-item.is-active {
-  color: var(--polar-night-0) !important;
+  color: var(--frost-3) !important;
 }
 
-[data-theme="dark"] .navbar-item.is-active {
-  color: var(--bulma-text-dark) !important;
+.button {
+  //padding-right: 5rem !important;
+  width: 8rem !important;
+  margin: 0.5rem
 }
 </style>

@@ -4,7 +4,9 @@ import BlogLayout from "@/layouts/BlogLayout.astro";
 import { type BlogPost } from "@api/BlogClient";
 import BlogPostPreview from "@components/blog/BlogPostPreview.astro";
 import Post from "@components/blog/Post.astro";
+import SearchBar from "@components/blog/SearchBar.astro";
 import { actions } from "astro:actions";
+import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 
 let { data, error } = await actions.getPosts();
@@ -12,13 +14,15 @@ let { data, error } = await actions.getPosts();
 let posts: BlogPost[] | undefined = data;
 
 if (typeof data === "undefined" && error) {
-  const errorMsg = `${error.code} ${error.message}.`;
+  const errorMsg = `${error.code} ${error.message}`;
   console.error(errorMsg);
 }
 
 const postsExists = typeof posts !== "undefined";
 
-const collectionPosts = await getCollection("blog");
+const collectionPosts: CollectionEntry<"blog">[] = await getCollection("blog");
+
+const filteredPosts = collectionPosts.sort((a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime()).slice(0, 6);
 ---
 
 <BlogLayout page="Home">
@@ -30,19 +34,33 @@ const collectionPosts = await getCollection("blog");
     </div>
 
     <main class="section">
-      <div class="columns is-multiline">
-        { postsExists &&
-          posts!.slice(0, 10).map((post) => (
-            <div class="column is-one-third user-post">
-              <Post post={post} showLink />
-            </div>
-          ))
-        }
-      </div>
+      <section class="section">
+        <div class="columns is-multiline">
+          { postsExists &&
+            posts!.slice(0, 10).map((post) => (
+              <div class="column is-one-third user-post">
+                <Post post={post} showLink />
+              </div>
+            ))
+          }
+        </div>
+      </section>
 
-      <div class="columns is-multiline">
-        {collectionPosts.map((post) => <BlogPostPreview post={post} />)}
-      </div>
+
+      <section class="section">
+        <SearchBar />
+      </section>
+
+
+      <section class="section">
+        <h1 class="title is-1">
+          Recent Posts
+        </h1>
+        <div class="columns is-multiline">
+          {filteredPosts.map((post) => <BlogPostPreview post={post} />)}
+        </div>
+      </section>
+
     </main>
   </div>
 </BlogLayout>

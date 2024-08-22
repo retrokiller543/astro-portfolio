@@ -3,9 +3,16 @@ title: "Exploring the Depths of Astro"
 subtitle: "How Astro Simplifies Modern Web Development"
 description: "In this post, we dive into the core features of Astro, a powerful static site generator, and explore how it can enhance your web development workflow."
 image: "/images/net-scanner.webp"
+createdAt: 2024-08-18
+
 author: "emil-schutt"
 relatedPosts:
   - about-me
+  - welcome
+tags:
+  - dev
+---
+
 ---
 
 import { Image } from "astro:assets";
@@ -26,23 +33,30 @@ Astro comes with a plethora of features designed to simplify your development pr
 
 3. **Zero JS by Default**: One of the standout features of Astro is that it ships zero JavaScript by default. This means faster load times and better performance for your users.
 
-```javascript
-// Example of zero JS by default
-function ExampleComponent() {
-  return <div>Hello, World!</div>;
+4. **SSR Support**: Astro supports server-side rendering, which means your site will render faster and load faster when it's deployed to the web.
+
+## Example of a Simple Astro Component
+
+```astro
+---
+interface Props {
+  title: string;
+  body: string;
 }
 
-// This component won't ship any JS by default!
-```
+const { title, body } = Astro.props;
+---
 
-<Code code={`const foo = 'bar';`} lang="js" />
+<h1>{title}</h1>
+<p>{body}</p>
+```
 
 ### How to Get Started with Astro
 
 Getting started with Astro is straightforward. You can scaffold a new Astro project using the following command:
 
 ```bash
-npx create-astro@latest
+bun create astro
 ```
 
 Once you’ve set up your project, you can start adding your content and components, and Astro will take care of the rest.
