@@ -6,6 +6,7 @@ import BlogPostPreview from "@components/blog/BlogPostPreview.astro";
 import Post from "@components/blog/Post.astro";
 import SearchBar from "@components/blog/SearchBar.astro";
 import { actions } from "astro:actions";
+import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 
 let { data, error } = await actions.getPosts();
@@ -19,9 +20,9 @@ if (typeof data === "undefined" && error) {
 
 const postsExists = typeof posts !== "undefined";
 
-const collectionPosts = await getCollection("blog");
+const collectionPosts: CollectionEntry<"blog">[] = await getCollection("blog");
 
-const filteredPosts = collectionPosts.sort((a, b) => b.data.createdAt - a.data.createdAt).slice(0, 6);
+const filteredPosts = collectionPosts.sort((a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime()).slice(0, 6);
 ---
 
 <BlogLayout page="Home">
