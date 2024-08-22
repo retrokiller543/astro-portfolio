@@ -1,0 +1,9 @@
+---
+import Search from "@components/blog/Search.vue";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+---
+
+<Search client:idle posts={posts} />
+

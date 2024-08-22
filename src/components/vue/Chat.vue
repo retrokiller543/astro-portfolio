@@ -7,7 +7,9 @@
         </div>
 
         <div id="log">
+            <!-- @vue-ignore -->
             <p v-for="(message, index) in messages" :key="index" :class="'msg msg--' + message.type">
+                <!-- @vue-ignore -->
                 {{ message.text }}
             </p>
         </div>
@@ -20,6 +22,7 @@
 </template>
 
 <script lang="ts">
+// @ts-ignore
 import { BLOG_API_BASE_URL } from "astro:env/client";
 
 export default {
@@ -38,6 +41,9 @@ export default {
             this.messages.push({ text, type });
             this.$nextTick(() => {
                 const logElement = document.getElementById('log');
+
+                if (!logElement) return;
+
                 logElement.scrollTop = logElement.scrollHeight;
             });
         },

@@ -1,0 +1,171 @@
+---
+title: "Rewrite it in Rust"
+subtitle: "Rewriting everything in Rust"
+description: "In this post, we dive into the idea of rewriting everything in Rust, and why I love it."
+image: "/images/net-scanner.webp"
+createdAt: 2024-08-21
+
+author: "emil-schutt"
+relatedPosts:
+tags:
+  - dev
+---
+
+## Introduction
+
+Rust has taken the programming world by storm with its unique blend of performance, safety, and concurrency. As a systems programming language, Rust promises the power of languages like C and C++, but without the headaches of memory management and undefined behavior. For many developers, this promise has become a reality, and the trend of rewriting existing software in Rust is gaining momentum. But why should you consider rewriting your project in Rust? Is it really worth the effort? In this post, I'll dive deep into the reasons why I love Rust and why it might just be the perfect language for your next project rewrite.
+
+## The Case for Rust
+
+### Performance
+
+When it comes to performance, Rust is second to none. Like C and C++, Rust is a compiled language that produces highly optimized machine code. However, Rust goes a step further by providing zero-cost abstractions, which means that high-level code is as efficient as hand-optimized low-level code.
+
+```rust
+fn main() {
+    let numbers: Vec<i32> = (1..10).collect();
+    let doubled: Vec<i32> = numbers.iter().map(|x| x * 2).collect();
+
+    println!("{:?}", doubled);
+}
+```
+
+In the example above, Rust's iterator adaptors like `map` and `collect` provide a high-level, functional programming approach while remaining highly efficient, thanks to Rust's zero-cost abstractions.
+
+### Memory Safety Without a Garbage Collector
+
+Memory management is one of the trickiest aspects of systems programming. In languages like C and C++, developers have to manually manage memory, which can lead to bugs like null pointer dereferencing, buffer overflows, and use-after-free errors. These bugs are not just annoying—they can lead to severe security vulnerabilities.
+
+```rust
+fn main() {
+    let x = 5;
+    let y = &x;
+
+    println!("x: {}, y: {}", x, y);
+}
+```
+
+Rust ensures memory safety through its ownership model. In the above code, `y` borrows `x` without taking ownership, ensuring that `x` is not dropped while `y` is still in use.
+
+### Concurrency Made Safe
+
+Concurrency is another area where Rust shines. Writing concurrent code is notoriously difficult, with issues like race conditions and deadlocks being common pitfalls in languages like C++ and Java. Rust's ownership and borrowing system extends to concurrency, ensuring that data races are caught at compile time rather than at runtime.
+
+```rust
+use std::thread;
+
+fn main() {
+    let data = vec![1, 2, 3];
+
+    let handle = thread::spawn(move || {
+        println!("Data from thread: {:?}", data);
+    });
+
+    handle.join().unwrap();
+}
+```
+
+In this example, the `move` keyword transfers ownership of `data` to the new thread, preventing data races. Rust's compiler ensures that `data` is not accessed elsewhere while the thread is running.
+
+### Ecosystem and Tooling
+
+Rust's ecosystem has grown rapidly in recent years, with a rich set of libraries and tools that make development easier. Cargo, Rust's build system and package manager, is a joy to use. It simplifies dependency management, builds, and even documentation generation.
+
+```toml
+# Cargo.toml
+[dependencies]
+serde = "1.0"
+serde_json = "1.0"
+```
+
+This `Cargo.toml` snippet shows how easy it is to manage dependencies in a Rust project. Here, we're adding `serde` and `serde_json`, popular libraries for serialization and deserialization.
+
+### Interoperability
+
+If you're worried about rewriting an entire project in Rust from scratch, you don't have to be. Rust is highly interoperable with other languages, especially C. You can start by rewriting performance-critical parts of your application in Rust and gradually migrate the rest of the codebase over time. This flexibility makes it easier to adopt Rust incrementally.
+
+```rust
+#[no_mangle]
+pub extern "C" fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+```
+
+In this example, a simple Rust function is made available to C code using the `extern "C"` keyword. This allows for seamless integration with existing C libraries.
+
+## The Challenges of Rewriting
+
+Rewriting a project in Rust (or any language) is not without its challenges. Here are some things to keep in mind before you embark on a rewrite:
+
+### Learning Curve
+
+Rust is a powerful language, but it has a steep learning curve, especially if you're coming from languages like Python or JavaScript. The ownership system, while incredibly beneficial, can be difficult to grasp at first. However, once you get the hang of it, you'll find that it leads to cleaner, more maintainable code.
+
+```rust
+fn main() {
+    let s = String::from("hello");
+    let s2 = s;
+
+    // println!("{}", s); // Error: value borrowed here after move
+    println!("{}", s2);
+}
+```
+
+Here, the ownership of `s` is moved to `s2`. Attempting to use `s` after the move would cause a compile-time error, highlighting the strict ownership rules Rust enforces.
+
+### Time Investment
+
+Rewriting an existing project is a significant time investment. It's not just a matter of translating code from one language to another—you'll also need to rethink your architecture and design decisions to take full advantage of Rust's features. This can be a daunting task, but the potential benefits in terms of performance, safety, and maintainability are worth it.
+
+### Ecosystem Maturity
+
+While Rust's ecosystem is growing rapidly, it's still relatively young compared to languages like Python or Java. You might find that some libraries or frameworks you're used to aren't available in Rust, or that they lack certain features. However, the community is very active, and many gaps are being filled quickly.
+
+## Success Stories
+
+Numerous projects have successfully been rewritten in Rust, with impressive results. Here are a few examples:
+
+### Firefox's Quantum Engine
+
+One of the most well-known success stories is Mozilla's rewrite of the Firefox web browser's engine. Dubbed "Quantum," this project involved rewriting large portions of the browser in Rust. The result was a significant improvement in performance and security, making Firefox one of the fastest and most secure browsers available.
+
+### Discord's Serde Migration
+
+Discord, the popular chat application, also adopted Rust for certain performance-critical parts of its codebase. They found that Rust's Serde library for serialization was not only faster than their existing implementation in Go, but it also reduced memory usage significantly.
+
+```rust
+use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+struct User {
+    id: u32,
+    name: String,
+    active: bool,
+}
+
+fn main() {
+    let user = User {
+        id: 1,
+        name: String::from("Alice"),
+        active: true,
+    };
+
+    let serialized = serde_json::to_string(&user).unwrap();
+    println!("Serialized: {}", serialized);
+
+    let deserialized: User = serde_json::from_str(&serialized).unwrap();
+    println!("Deserialized: {:?}", deserialized);
+}
+```
+
+This code shows how easy it is to serialize and deserialize data in Rust using the Serde library, which Discord used to optimize its performance.
+
+### Dropbox's Migration to Rust
+
+Dropbox rewrote a significant portion of its core file synchronization engine in Rust. The rewrite led to improved performance and stability, allowing Dropbox to handle larger and more complex workloads.
+
+## Conclusion
+
+Rewriting a project in Rust is not a decision to be taken lightly, but the potential benefits are immense. With its focus on performance, safety, and concurrency, Rust is uniquely suited to modern systems programming challenges. If you're looking for a language that can help you write more reliable, maintainable, and efficient code, Rust is worth considering.
+
+Whether you're building a new project from scratch or considering a rewrite, Rust's growing ecosystem, strong community, and cutting-edge features make it a powerful tool in any developer's toolkit. So why not give it a try? You might just find that rewriting it in Rust is the best decision you ever made.

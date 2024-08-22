@@ -14,11 +14,13 @@ export interface Props {
 
 const props = Astro.props;
 
-const { Content, headings } = await props.post.render();
+// @ts-ignore
+const author: CollectionEntry<'authors'> = await getEntry(props.post.data.author);
 
-const author = await getEntry(props.post.data.author.collection, props.post.data.author.id);
-
+// @ts-ignore
 const tags: CollectionEntry<'tags'>[] = await getEntries(props.post.data.tags);
+
+const { Content, headings } = await props.post.render();
 ---
 
 <section class="section">

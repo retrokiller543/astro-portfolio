@@ -72,10 +72,6 @@ export default {
     }
 }
 
-.panel-heading {
-    color: var(--bulma-text-dark);
-}
-
 .panel-block {
     cursor: pointer;
 }
